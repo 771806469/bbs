@@ -4,6 +4,14 @@ import java.sql.Timestamp;
 
 public class User {
 
+    public static final String DEFAULT_AVATAR_NAME = "default-avatar.jpg";
+
+    public static final Integer USERSTATE_UNACTIVE = 0;
+
+    public static final Integer USERSTATE_ACTIVE = 1;
+
+    public static final Integer USERSTATE_DISABLED = 2;
+
     private Integer id;
     private String username;
     private String password;
@@ -12,6 +20,17 @@ public class User {
     private Timestamp createTime;
     private Integer state;
     private String avatar;
+
+    public User() {}
+
+    public User(String username,String password,String email,String phone,Integer state,String avatar) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.avatar = avatar;
+        this.state = state;
+    }
 
     public Integer getId() {
         return id;

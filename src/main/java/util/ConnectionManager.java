@@ -4,10 +4,9 @@ package util;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Properties;
+
 
 
 public class ConnectionManager {
@@ -19,14 +18,11 @@ public class ConnectionManager {
     private static String driver;
 
     static {
-        Properties prop = new Properties();
-        try {
-            prop.load(ConnectionManager.class.getClassLoader().getResourceAsStream("config.properties"));
 
-            driver = prop.getProperty("jdbc.driver");
-            url = prop.getProperty("jdbc.url");
-            name = prop.getProperty("jdbc.username");
-            psd = prop.getProperty("jdbc.password");
+            driver = Config.get("jdbc.driver");
+            url = Config.get("jdbc.url");
+            name = Config.get("jdbc.username");
+            psd = Config.get("jdbc.password");
 
             basicDataSource.setUrl(url);
             basicDataSource.setDriverClassName(driver);
@@ -38,9 +34,7 @@ public class ConnectionManager {
             basicDataSource.setMinIdle(5);
             basicDataSource.setMaxIdle(20);
             basicDataSource.setMaxWaitMillis(5000);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public static DataSource getBasicDataSource() {
