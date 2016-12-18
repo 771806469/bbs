@@ -33,4 +33,9 @@ public class UserDAO {
         logger.trace("UserDAO存入的值{},{},{},{},{},{}",user.getUsername(),user.getPassword(),user.getEmail(),user.getPhone(),user.getState(),user.getAvatar());
         logger.debug(sql);
     }
+
+    public void update(User user) {
+        String sql = "update user set password=?,email=?,phone=?,state=?,avatat=? where id=?";
+        DBHelp.update(sql,user.getPassword(),user.getEmail(),user.getPhone(),user.getState(),user.getAvatar(),user.getAvatar(),user.getId());
+    }
 }

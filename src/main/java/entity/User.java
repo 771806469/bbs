@@ -1,15 +1,22 @@
 package entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class User {
+public class User implements Serializable{
 
     public static final String DEFAULT_AVATAR_NAME = "default-avatar.jpg";
-
+    /**
+     * 未激活
+     */
     public static final Integer USERSTATE_UNACTIVE = 0;
-
+    /**
+     * 已激活
+     */
     public static final Integer USERSTATE_ACTIVE = 1;
-
+    /**
+     * 已禁用
+     */
     public static final Integer USERSTATE_DISABLED = 2;
 
     private Integer id;

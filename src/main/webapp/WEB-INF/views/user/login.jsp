@@ -59,5 +59,6 @@
 <!--container end-->
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script src="/static/js/editer/scripts/jquery.validate.min.js"></script>
+<script src="/static/js/self/login.js"></script>
 </body>
 </html>

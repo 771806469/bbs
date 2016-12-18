@@ -1,8 +1,9 @@
 package entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class LoginLog {
+public class LoginLog implements Serializable{
 
     private Integer id;
     private Timestamp loginTime;
