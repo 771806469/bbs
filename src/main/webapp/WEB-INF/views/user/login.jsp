@@ -26,7 +26,7 @@
 
 
         <form action="" id="loginForm" class="form-horizontal">
-            <c:if test="${param.state == 'logout'}">
+            <c:if test="${not empty requestScope.message}">
                 <div class="alert alert-success">
                     ${requestScope.message}
                 </div>
@@ -47,7 +47,7 @@
             <div class="control-group">
                 <label class="control-label"></label>
                 <div class="controls">
-                    <a href="#">忘记密码</a>
+                    <a href="/foundpassword">忘记密码</a>
                 </div>
             </div>
 
