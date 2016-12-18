@@ -12,11 +12,6 @@ public class UserDAO {
 
     private static Logger logger = LoggerFactory.getLogger(UserDAO.class);
 
-    public void saveUser(User user) {
-        String sql = "insert into user(username,password,email,phone,state,avatar) values(?,?,?,?,?,?)";
-        DBHelp.update(sql,user.getUsername(),user.getPassword(),user.getEmail(),user.getPhone(),user.getState(),user.getAvatar());
-    }
-
     public User findByUsername(String username) {
         String sql = "select id,username,password,email,createTime,phone,state,avatar from user where username=?";
         return DBHelp.query(sql,new BeanHandler<>(User.class),username);
@@ -35,7 +30,8 @@ public class UserDAO {
     }
 
     public void update(User user) {
-        String sql = "update user set password=?,email=?,phone=?,state=?,avatat=? where id=?";
-        DBHelp.update(sql,user.getPassword(),user.getEmail(),user.getPhone(),user.getState(),user.getAvatar(),user.getAvatar(),user.getId());
+        String sql = "update user set password=?,email=?,phone=?,state=?,avatar=? where id=?";
+        DBHelp.update(sql,user.getPassword(),user.getEmail(),user.getPhone(),user.getState(),user.getAvatar(),user.getId());
+        logger.debug("update的sql语句为：{}",sql);
     }
 }

@@ -23,7 +23,7 @@
             <span class="title"><i class="fa fa-sign-in"></i> 登录</span>
         </div>
 
-        <form action="" class="form-horizontal">
+        <form action="" id="loginForm" class="form-horizontal">
             <div class="control-group">
                 <label class="control-label">账号</label>
                 <div class="controls">
@@ -44,7 +44,7 @@
             </div>
 
             <div class="form-actions">
-                <button id="loginBtn" class="btn btn-primary">登录</button>
+                <button id="loginBtn" type="button" class="btn btn-primary">登录</button>
 
                 <a class="pull-right" href="/reg">注册账号</a>
             </div>

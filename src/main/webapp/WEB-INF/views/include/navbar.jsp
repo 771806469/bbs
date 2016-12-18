@@ -14,7 +14,7 @@
         </a>
         <ul class="unstyled inline pull-right">
             <c:choose>
-                <c:when test="${not empty sessionScope.user}">
+                <c:when test="${not empty sessionScope.curr_user}">
                     <li>
                         <a href="#">
                             <img src="/static/img/avatra.jpg" width="20" height="20" class="img-circle" alt="">

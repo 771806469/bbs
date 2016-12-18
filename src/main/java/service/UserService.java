@@ -4,6 +4,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import dao.UserDAO;
+import entity.LoginLog;
 import entity.User;
 import exception.ServiceException;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -114,6 +115,30 @@ public class UserService {
         });
 
         thread.start();
+    }
+
+    public User login(String username, String password,String ip) {
+
+        User user = userDAO.findByUsername(username);
+        password = DigestUtils.md5Hex(Config.get("singup.password.salt") + password);
+        if(user != null && password.equals(user.getPassword())) {
+            if(user.getState().equals(User.USERSTATE_ACTIVE)) {
+                //记录登录日志
+                LoginLog log = new LoginLog();
+                log.setLoginIp(ip);
+                log.setUserId(user.getId());
+
+                logger.info("{}登录了系统,ip为：{}",username,ip);
+                return user;
+            } else {
+                logger.error("{}尝试登录系统但是账号被禁用",username);
+                throw new ServiceException("该账户已被禁用！");
+            }
+        } else {
+            logger.error("{}尝试登录系统但是账号与密码不匹配",username);
+            throw new ServiceException("账号和密码错误，请重试");
+        }
+
     }
 }
 

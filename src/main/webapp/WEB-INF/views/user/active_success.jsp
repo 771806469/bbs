@@ -22,8 +22,9 @@
         <div class="box-header">
             <span class="title"><i class="fa fa-sign-in"></i> 系统提示</span>
         </div>
-
-        <h4 style="font-size: 18px">账号已成功激活，请 <a href="/login">请登录</a> </h4>
+        <div class="box-padding">
+            <h4 style="font-size: 18px">账号已成功激活，请 <a href="/login">请登录</a> </h4>
+        </div>
 
 
 
