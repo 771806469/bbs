@@ -37,6 +37,7 @@ $(function(){
                 },
                 success : function (data) {
                     if(data.state == "success") {
+                        alert("登录成功！");
                         window.location.href="/home";
                     } else {
                         alert(data.message);

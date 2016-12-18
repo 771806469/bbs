@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +24,14 @@
             <span class="title"><i class="fa fa-sign-in"></i> 登录</span>
         </div>
 
+
         <form action="" id="loginForm" class="form-horizontal">
+            <c:if test="${param.state == 'logout'}">
+                <div class="alert alert-success">
+                    ${requestScope.message}
+                </div>
+            </c:if>
+
             <div class="control-group">
                 <label class="control-label">账号</label>
                 <div class="controls">

@@ -1,4 +1,4 @@
-package web.servlet.userState;
+package web.servlet.user;
 
 import exception.ServiceException;
 import service.UserService;

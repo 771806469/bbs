@@ -1,4 +1,4 @@
-package web.servlet;
+package web.servlet.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -17,7 +17,7 @@
                 <c:when test="${not empty sessionScope.curr_user}">
                     <li>
                         <a href="#">
-                            <img src="/static/img/avatra.jpg" width="20" height="20" class="img-circle" alt="">
+                            <img src="http://ohwnpkfcx.bkt.clouddn.com/${sessionScope.curr_user.avatar}?imageView2/1/w/20/h/20" class="img-circle" alt="">
                         </a>
                     </li>
                     <li>

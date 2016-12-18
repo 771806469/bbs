@@ -1,4 +1,4 @@
-package web.servlet;
+package web.servlet.user;
 
 import entity.User;
 import exception.ServiceException;
