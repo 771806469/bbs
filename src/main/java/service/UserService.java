@@ -3,6 +3,7 @@ package service;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import dao.LoginLogDAO;
 import dao.UserDAO;
 import entity.LoginLog;
 import entity.User;
@@ -22,6 +23,7 @@ public class UserService {
 
     private static Logger logger = LoggerFactory.getLogger(UserService.class);
     private UserDAO userDAO = new UserDAO();
+    private static LoginLogDAO loginLogDAO = new LoginLogDAO();
     /**
      * 激活账号cache
      */
@@ -127,6 +129,7 @@ public class UserService {
                 LoginLog log = new LoginLog();
                 log.setLoginIp(ip);
                 log.setUserId(user.getId());
+                loginLogDAO.saveLog(log);
 
                 logger.info("{}登录了系统,ip为：{}",username,ip);
                 return user;
