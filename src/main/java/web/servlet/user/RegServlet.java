@@ -1,5 +1,6 @@
 package web.servlet.user;
 
+import exception.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.UserService;
@@ -38,7 +39,7 @@ public class RegServlet extends BaseServlet{
             userService.save(username,password,email,phone);
 
             result.put("state", "success");
-        } catch(Exception ex) {
+        } catch(ServiceException ex) {
             ex.printStackTrace();
             result.put("state","error");
             result.put("message","注册失败，请稍后再试！");

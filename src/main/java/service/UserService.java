@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.Config;
 import util.EmailUtil;
+import util.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,6 +38,32 @@ public class UserService {
                     return null;
                 }
             });
+    /**
+     * 限制找回密码操作点击次数cache
+     */
+    private static LoadingCache<String, String> timesCache = CacheBuilder.newBuilder()
+            .maximumSize(100)
+            .expireAfterWrite(60, TimeUnit.SECONDS)
+            .build(new CacheLoader<String, String>() {
+                @Override
+                public String load(String s) throws Exception {
+                    return null;
+                }
+            });
+    /**
+     * 找回密码cache
+     */
+    private static LoadingCache<String, String> passwordCache = CacheBuilder.newBuilder()
+            .maximumSize(100)
+            .expireAfterWrite(30, TimeUnit.MINUTES)
+            .build(new CacheLoader<String, String>() {
+
+                @Override
+                public String load(String s) {
+                    return null;
+                }
+            });
+
 
     /**
      * 根据token激活对应的账号
@@ -50,7 +77,7 @@ public class UserService {
         if (username != null) {
             UserDAO userDAO = new UserDAO();
             User user = userDAO.findByUsername(username);
-            if(user != null) {
+            if (user != null) {
                 user.setState(User.USERSTATE_ACTIVE);
                 userDAO.update(user);
                 //账号激活成功后删除token
@@ -119,29 +146,115 @@ public class UserService {
         thread.start();
     }
 
-    public User login(String username, String password,String ip) {
+    public User login(String username, String password, String ip) {
 
         User user = userDAO.findByUsername(username);
         password = DigestUtils.md5Hex(Config.get("singup.password.salt") + password);
-        if(user != null && password.equals(user.getPassword())) {
-            if(user.getState().equals(User.USERSTATE_ACTIVE)) {
+        if (user != null && password.equals(user.getPassword())) {
+            if (user.getState().equals(User.USERSTATE_ACTIVE)) {
                 //记录登录日志
                 LoginLog log = new LoginLog();
                 log.setLoginIp(ip);
                 log.setUserId(user.getId());
                 loginLogDAO.saveLog(log);
 
-                logger.info("{}登录了系统,ip为：{}",username,ip);
+                logger.info("{}登录了系统,ip为：{}", username, ip);
                 return user;
             } else {
-                logger.error("{}尝试登录系统但是账号被禁用",username);
+                logger.error("{}尝试登录系统但是账号被禁用", username);
                 throw new ServiceException("该账户已被禁用！");
             }
         } else {
-            logger.error("{}尝试登录系统但是账号与密码不匹配",username);
+            logger.error("{}尝试登录系统但是账号与密码不匹配", username);
             throw new ServiceException("账号和密码错误，请重试");
         }
 
+    }
+
+    /**
+     * 判断是否发送找回密码邮件
+     *
+     * @param type      找回密码方式
+     * @param value     电子邮件或手机号码
+     * @param sessionId
+     * @throws ServiceException
+     */
+    public void findPassword(String type, String value, String sessionId) throws ServiceException {
+        if (timesCache.getIfPresent(sessionId) == null) {
+            if ("email".equals(type)) {
+                User user = userDAO.findByEmail(value);
+                if (user != null) {
+
+                    Thread thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String uuid = UUID.randomUUID().toString();
+
+                            logger.trace("产生的UUID值为：{}",uuid);
+                            //将uuid，和用户账号放入缓存
+                            passwordCache.put(uuid, user.getUsername());
+                            //设置找回密码连接
+                            String url = "http://bbs.kaishengit.com/resetpassword?_=" + uuid;
+                            logger.trace("找回密码连接为：{}",url);
+                            String html = user.getUsername() + "您好：</br>请点击该<a href='" + url + "'>链接</a>进行找回密码操作，此链接30分钟内有效！";
+
+                            EmailUtil.sendHtmlEmail(value, "找回密码邮件", html);
+                        }
+                    });
+                    thread.start();
+
+                } else {
+                    throw new ServiceException("此邮箱不存在！");
+                }
+            }
+            timesCache.put(sessionId, "xxx");
+        } else {
+            throw new ServiceException("操作频率过快请稍候再试！");
+        }
+    }
+
+    /**
+     * 当用户点击找回密码连接时，根据链接上的token值找相应存在cache中的账号
+     * @param token
+     * @return
+     */
+    public User findPasswordByToken(String token) {
+       String username = passwordCache.getUnchecked(token);
+       if(StringUtils.isNotEmpty(username)) {
+           User user = userDAO.findByUsername(username);
+           if(user == null) {
+               throw new ServiceException("账号不存在");
+           } else {
+               return user;
+           }
+       } else {
+           throw new ServiceException("token错误或已过期");
+       }
+    }
+
+    /**
+     * @param token 点击重置密码连接的token
+     * @param username 重置密码的用户名
+     * @param newpassword 新密码
+     */
+    public void resetPassword(String token, String username, String newpassword) {
+        String tokenUsername = passwordCache.getIfPresent(token);
+        if(tokenUsername != null) {
+            User user = userDAO.findByUsername(username);
+            if(user != null) {
+                user.setPassword(DigestUtils.md5Hex(Config.get("singup.password.salt") + newpassword));
+                userDAO.update(user);
+                logger.info("{}重置了密码",tokenUsername);
+                //删除passwordCache缓存中的token
+                passwordCache.invalidate("uuid");
+                //删除timesCache缓存中的sessionID
+                timesCache.invalidate("sessionId");
+            } else {
+                throw new ServiceException("此帐号不存在！");
+            }
+        } else {
+            throw new ServiceException("验证时间已过期！");
+        }
     }
 }
 
