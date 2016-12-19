@@ -256,6 +256,38 @@ public class UserService {
             throw new ServiceException("验证时间已过期！");
         }
     }
+
+    /**
+     * 修改用户的电子邮件
+     * @param user 需修改用户
+     * @param email 新Email
+     */
+    public void updateEmail(User user, String email) {
+        if(!email.equals(user.getEmail())) {
+                user.setEmail(email);
+                userDAO.update(user);
+        }
+    }
+
+    /**
+     * 修改用户密码
+     * @param user 需修改用户
+     * @param newpassword 新密码
+     * @param oldpassword 旧密码
+     */
+    public void updatePassword(User user, String oldpassword,String newpassword) {
+        logger.trace("接收的新密码：{}，旧密码：{}",newpassword,oldpassword);
+        String md5OldPassword = DigestUtils.md5Hex(Config.get("singup.password.salt") + oldpassword);
+        logger.trace("user.getPassword():{},md5OldPassword:{}",user.getPassword(),md5OldPassword);
+        if(md5OldPassword.equals(user.getPassword())) {
+            user.setPassword(DigestUtils.md5Hex(Config.get("singup.password.salt") + newpassword));
+            userDAO.update(user);
+        } else {
+            throw new ServiceException("原始密码错误");
+        }
+
+
+    }
 }
 
 

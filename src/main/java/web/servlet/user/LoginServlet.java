@@ -1,5 +1,6 @@
 package web.servlet.user;
 
+import dto.JsonResult;
 import entity.User;
 import exception.ServiceException;
 import org.slf4j.Logger;
@@ -23,6 +24,9 @@ public class LoginServlet extends BaseServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        session.removeAttribute("curr_user");
+
         forward("user/login",req,resp);
     }
 
@@ -36,18 +40,18 @@ public class LoginServlet extends BaseServlet{
         //获取登录者IP
         String ip = req.getRemoteAddr();
         UserService userService = new UserService();
-        Map<String,Object> result = new HashMap<>();
+        JsonResult result = new JsonResult();
 
         try {
             User user = userService.login(username,password,ip);
             HttpSession session = req.getSession();
             session.setAttribute("curr_user",user);
 
-            result.put("state","success");
+            result.setState(JsonResult.SUCCESS);
         } catch(ServiceException ex) {
             logger.error("{}" + ex.getMessage() + "ip为{}",username,ip);
-            result.put("state","error");
-            result.put("message",ex.getMessage());
+            result.setState(JsonResult.ERROR);
+            result.setMessage(ex.getMessage());
         }
         renderJson(resp,result);
 

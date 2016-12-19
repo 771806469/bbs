@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -22,6 +23,15 @@ public class BaseServlet extends HttpServlet {
         writer.print(str);
         writer.flush();
         writer.close();
+    }
+
+    public Object getSessionValue(HttpServletRequest req,String sessionKey) {
+        HttpSession session = req.getSession();
+        Object obj = session.getAttribute(sessionKey);
+        if(obj == null) {
+            return null;
+        }
+        return obj;
     }
 
     public void renderJson(HttpServletResponse resp,Object obj) throws IOException {

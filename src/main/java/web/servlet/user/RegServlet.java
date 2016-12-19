@@ -1,5 +1,6 @@
 package web.servlet.user;
 
+import dto.JsonResult;
 import exception.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,17 +33,18 @@ public class RegServlet extends BaseServlet{
         String phone = req.getParameter("phone");
         logger.trace("RegServlet接受username的值{}",username);
 
-        Map<String,String> result = new HashMap<>();
+        JsonResult result = new JsonResult();
 
         try {
             UserService userService = new UserService();
             userService.save(username,password,email,phone);
 
-            result.put("state", "success");
+            result.setState(JsonResult.SUCCESS);
         } catch(ServiceException ex) {
             ex.printStackTrace();
-            result.put("state","error");
-            result.put("message","注册失败，请稍后再试！");
+            result.setState(JsonResult.ERROR);
+            result.setMessage("注册失败，请稍后再试！");
+            renderJson(resp,result);
             logger.error("注册失败");
         }
 
