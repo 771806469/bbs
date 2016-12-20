@@ -56,7 +56,6 @@ public class ResetPasswordServlet extends BaseServlet {
         } catch(ServiceException ex) {
             jsonResult.setState(JsonResult.ERROR);
             jsonResult.setMessage(ex.getMessage());
-            renderJson(resp,jsonResult);
         }
         renderJson(resp,jsonResult);
     }

@@ -44,7 +44,6 @@ public class RegServlet extends BaseServlet{
             ex.printStackTrace();
             result.setState(JsonResult.ERROR);
             result.setMessage("注册失败，请稍后再试！");
-            renderJson(resp,result);
             logger.error("注册失败");
         }
 

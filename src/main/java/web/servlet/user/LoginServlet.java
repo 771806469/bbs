@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.UserService;
 import util.BaseServlet;
+import util.Config;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,7 +34,6 @@ public class LoginServlet extends BaseServlet{
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         logger.trace("登录者的账号为{}",username);
-        resp.setContentType("application/json;charset=UTF-8");
 
         //获取登录者IP
         String ip = req.getRemoteAddr();
@@ -44,6 +44,7 @@ public class LoginServlet extends BaseServlet{
             User user = userService.login(username,password,ip);
             HttpSession session = req.getSession();
             session.setAttribute("curr_user",user);
+            logger.debug("用户的头像域名为：{}{}", Config.get("qiniu.domain"),user.getAvatar());
 
             result.setState(JsonResult.SUCCESS);
         } catch(ServiceException ex) {

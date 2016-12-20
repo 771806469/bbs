@@ -127,6 +127,7 @@ public class UserService {
      */
     public void save(String username, String password, String email, String phone) {
         User user = new User(username, DigestUtils.md5Hex(Config.get("singup.password.salt") + password), email, phone, User.USERSTATE_UNACTIVE, User.DEFAULT_AVATAR_NAME);
+        logger.debug("注册用户存储的默认头像地址为：{}{}",Config.get("qiniu.domain"),User.DEFAULT_AVATAR_NAME);
 
         userDAO.save(user);
 
@@ -139,7 +140,7 @@ public class UserService {
                 //将token和用户名放入缓存
                 cache.put(uuid, username);
                 EmailUtil.sendHtmlEmail(email, "激活账号", html);
-                logger.debug(url);
+                logger.debug("激活账号的地址wei{}",url);
             }
         });
 
