@@ -160,9 +160,11 @@ public class UserService {
 
                 logger.info("{}登录了系统,ip为：{}", username, ip);
                 return user;
-            } else {
+            } else if(user.getState().equals(User.USERSTATE_DISABLED)){
                 logger.error("{}尝试登录系统但是账号被禁用", username);
                 throw new ServiceException("该账户已被禁用！");
+            } else {
+                throw new ServiceException("该账户未激活！");
             }
         } else {
             logger.error("{}尝试登录系统但是账号与密码不匹配", username);
@@ -287,6 +289,18 @@ public class UserService {
         }
 
 
+    }
+
+    /**
+     * 修改用户头像
+     * @param user
+     * @param avatarKey 更改后的头像KEY
+     */
+    public void updateAvatar(User user, String avatarKey) {
+        if(user != null && !avatarKey.equals(user.getAvatar())) {
+            user.setAvatar(avatarKey);
+            userDAO.update(user);
+        }
     }
 }
 

@@ -10,9 +10,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>个人资料修改</title>
     <link href="http://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/js/webuploader/webuploader.css">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
@@ -88,7 +89,7 @@
             <div class="control-group">
                 <label class="control-label">当前头像</label>
                 <div class="controls">
-                    <img src="http://ohwnpkfcx.bkt.clouddn.com/${sessionScope.curr_user.avatar}?imageView2/1/w/20/h/20" class="img-circle" alt="">
+                    <img id="avatar" src="http://ohwtqwe8j.bkt.clouddn.com/${sessionScope.curr_user.avatar}?imageView2/1/w/50/h/50" class="img-circle" alt="">
                 </div>
             </div>
             <hr>
@@ -98,7 +99,7 @@
                 <li>如果你是男的，请不要用女人的照片作为头像，这样可能会对其他会员产生误导</li>
             </ul>
             <div class="form-actions">
-                <button class="btn btn-primary">上传新头像</button>
+                <div id="avatarBtn" >上传新头像</div>
             </div>
 
 
@@ -111,6 +112,49 @@
 <!--container end-->
 <script src="/static/js/jquery-1.11.1.js"></script>
 <script src="/static/js/jquery.validate.min.js"></script>
+<script src="/static/js/webuploader/webuploader.min.js"></script>
 <script src="/static/js/self/setting.js"></script>
+<script>
+
+    $(function(){
+        //头像上传
+        var uploader = WebUploader.create({
+            swf : "/static/js/webuploader/Uploader.swf",
+            server: "http://up-z1.qiniu.com/",
+            pick: '#avatarBtn',
+            auto : true,
+            fileVal:'file',
+            formData:{'token':'${requestScope.token}'}
+            /*accept: {
+             title: 'Images',
+             extensions: 'gif,jpg,jpeg,bmp,png',
+             mimeTypes: 'image/!*'
+             }*/
+        });
+
+        //上传成功
+        uploader.on('uploadSuccess',function(file,data){
+            var fileKey = data.key;
+            //修改数据库中的值
+            $.post("/setting?action=avatar",{'fileKey':data.key}).done(function (data) {
+                if(data.state == "success") {
+                    var url = "http://ohwtqwe8j.bkt.clouddn.com/";
+                    $("#avatar").attr("src",url + fileKey +"?imageView2/1/w/50/h/50");
+                    $("#navbarAvatar").attr("src",url + fileKey +"?imageView2/1/w/20/h/20");
+                    alert("头像上传成功！");
+                }
+            }).error(function () {
+                alert("服务器访问错误！");
+            })
+        });
+        //上传失败
+        uploader.on('uploadError',function(){
+            alert("上传失败,请稍后再试");
+        });
+
+    });
+
+
+</script>
 </body>
 </html>

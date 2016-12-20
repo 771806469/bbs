@@ -1,10 +1,12 @@
 package web.servlet.user;
 
+import com.qiniu.util.Auth;
 import dto.JsonResult;
 import entity.User;
 import exception.ServiceException;
 import service.UserService;
 import util.BaseServlet;
+import util.Config;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +21,11 @@ public class SettingServlet extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Auth auth = Auth.create(Config.get("ak"),Config.get("sk"));
+
+        String token = auth.uploadToken(Config.get("bucket"));
+
+        req.setAttribute("token",token);
         forward("user/setting", req, resp);
     }
 
@@ -29,7 +36,21 @@ public class SettingServlet extends BaseServlet {
             updateEmail(req, resp);
         } else if("password".equals(action)) {
             updatePassword(req,resp);
+        } else if("avatar".equals(action)) {
+            updateAvatar(req,resp);
         }
+    }
+
+    private void updateAvatar(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+        String avatarKey = req.getParameter("fileKey");
+        User user = (User)getSessionValue(req,"curr_user");
+        JsonResult result = new JsonResult();
+
+        userService.updateAvatar(user,avatarKey);
+        result.setState(JsonResult.SUCCESS);
+
+        renderJson(resp,result);
     }
 
     private void updatePassword(HttpServletRequest req,HttpServletResponse resp) throws IOException {

@@ -28,6 +28,7 @@
         <httpclient-version>4.5</httpclient-version>
         <logback-version>1.1.8</logback-version>
         <slf4j-version>1.7.20</slf4j-version>
+        <qiniu-version>7.2.0</qiniu-version>
 
     </properties>
 
@@ -118,6 +119,20 @@
             <artifactId>httpclient</artifactId>
             <version>${httpclient-version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>7.2.0</version>
+            <!--排除Maven的依赖-->
+            <exclusions>
+                <exclusion>
+                    <artifactId>com.google.code.gson</artifactId>
+                    <groupId>gson</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+
     </dependencies>
     <build>
         <finalName>bbs</finalName>
