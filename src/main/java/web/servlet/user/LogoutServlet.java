@@ -18,7 +18,7 @@ public class LogoutServlet extends BaseServlet{
         session.invalidate();
 
         //resp.sendRedirect("/login?state=logout");
-        req.setAttribute("message","您已安全退出");
+        req.setAttribute("logout","您已安全退出");
         forward("user/login",req,resp);
 
     }

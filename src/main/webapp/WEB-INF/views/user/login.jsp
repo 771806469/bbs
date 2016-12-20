@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,48 +17,110 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-<%@include file="../include/navbar.jsp"%>
+<%@include file="../include/navbar.jsp" %>
 <div class="container">
     <div class="box">
         <div class="box-header">
             <span class="title"><i class="fa fa-sign-in"></i> 登录</span>
         </div>
 
-
-        <form action="" id="loginForm" class="form-horizontal">
-            <c:if test="${not empty requestScope.message}">
+        <c:choose>
+            <c:when test="${not empty requestScope.logout}">
                 <div class="alert alert-success">
-                    ${requestScope.message}
+                        ${requestScope.logout}
                 </div>
-            </c:if>
+                <form action="" id="loginFormO" class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label">账号</label>
+                        <div class="controls">
+                            <input name="username" type="text">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">密码</label>
+                        <div class="controls">
+                            <input name="password" type="password">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label"></label>
+                        <div class="controls">
+                            <a href="/foundpassword">忘记密码</a>
+                        </div>
+                    </div>
 
-            <div class="control-group">
-                <label class="control-label">账号</label>
-                <div class="controls">
-                    <input name="username" type="text">
+                    <div class="form-actions">
+                        <button id="loginBtnO" type="button" class="btn btn-primary">登录</button>
+
+                        <a class="pull-right" href="/reg">注册账号</a>
+                    </div>
+
+                </form>
+
+            </c:when>
+            <c:when test="${not empty param.redirect}">
+                <div id="redirectURL" class="alert alert-error">
+                        ${param.redirect}
                 </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label">密码</label>
-                <div class="controls">
-                    <input name="password" type="password">
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label"></label>
-                <div class="controls">
-                    <a href="/foundpassword">忘记密码</a>
-                </div>
-            </div>
+                <form action="" id="loginFormF" class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label">账号</label>
+                        <div class="controls">
+                            <input name="username" type="text">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">密码</label>
+                        <div class="controls">
+                            <input name="password" type="password">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label"></label>
+                        <div class="controls">
+                            <a href="/foundpassword">忘记密码</a>
+                        </div>
+                    </div>
 
-            <div class="form-actions">
-                <button id="loginBtn" type="button" class="btn btn-primary">登录</button>
+                    <div class="form-actions">
+                        <button id="loginBtnF" type="button" class="btn btn-primary">登录</button>
 
-                <a class="pull-right" href="/reg">注册账号</a>
-            </div>
+                        <a class="pull-right" href="/reg">注册账号</a>
+                    </div>
 
-        </form>
+                </form>
 
+            </c:when>
+            <c:otherwise>
+                <form action="" id="loginForm" class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label">账号</label>
+                        <div class="controls">
+                            <input name="username" type="text">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">密码</label>
+                        <div class="controls">
+                            <input name="password" type="password">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label"></label>
+                        <div class="controls">
+                            <a href="/foundpassword">忘记密码</a>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button id="loginBtn" type="button" class="btn btn-primary">登录</button>
+
+                        <a class="pull-right" href="/reg">注册账号</a>
+                    </div>
+
+                </form>
+            </c:otherwise>
+        </c:choose>
 
 
     </div>

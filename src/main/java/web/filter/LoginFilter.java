@@ -1,5 +1,7 @@
 package web.filter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import util.AbstractFilter;
 
 import javax.servlet.*;
@@ -10,12 +12,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by Administrator on 2016/12/20 0020.
- */
+
 public class LoginFilter extends AbstractFilter {
 
     private  List<String> urlList = new ArrayList<>();
+    private Logger logger = LoggerFactory.getLogger(LoginFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -35,7 +36,8 @@ public class LoginFilter extends AbstractFilter {
             if(req.getSession().getAttribute("curr_user") != null) {
                 filterChain.doFilter(req,resp);
             } else {
-                req.getRequestDispatcher("/login?redirect=" + requestUrl);
+                logger.trace("登录过滤器，重定向到login页面,redirect网页为：{}",requestUrl);
+                req.getRequestDispatcher("/login?redirect=" + requestUrl).forward(req,resp);
             }
         } else {
             filterChain.doFilter(req,resp);

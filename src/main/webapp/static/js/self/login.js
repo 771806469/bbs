@@ -1,10 +1,21 @@
 $(function(){
 
+    var redirect = "/home";
     $("#loginBtn").click(function () {
         $("#loginForm").submit();
     });
 
-    $("#loginForm").validate({
+    $("#loginBtnF").click(function () {
+        redirect = $("#redirectURL").val();
+        $("#loginFormF").submit();
+    });
+
+    $("#loginBtnO").click(function () {
+        console.log("loginBtnO");
+        $("#loginFormO").submit();
+    });
+
+    $("form").validate({
         errorElement : "span",
         errorClass : "text-error",
         rules : {
@@ -27,18 +38,22 @@ $(function(){
                 rangelength : "密码长度为6~18位"
             }
         },
-        submitHandler : function(){
+        submitHandler : function(form){
             $.ajax({
                 url : "/login",
                 type : "post",
-                data : $("#loginForm").serialize(),
+                data : $(form).serialize(),
                 beforeSend : function () {
                     $("#loginBtn").html("登录中<img src='/static/img/loding.gif'>").attr("disabled","disabled");
                 },
                 success : function (data) {
                     if(data.state == "success") {
                         alert("登录成功！");
-                        window.location.href="/home";
+                        if(!redirect) {
+                            window.location.href=redirect;
+                        }else {
+                            window.location.href="/home";
+                        }
                     } else {
                         alert(data.message);
                     }
