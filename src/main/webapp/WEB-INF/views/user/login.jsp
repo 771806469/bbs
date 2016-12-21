@@ -60,7 +60,7 @@
             </c:when>
             <c:when test="${not empty param.redirect}">
                 <div id="redirectURL" class="alert alert-error">
-                        ${param.redirect}
+                        请登录后再操作
                 </div>
                 <form action="" id="loginFormF" class="form-horizontal">
                     <div class="control-group">
