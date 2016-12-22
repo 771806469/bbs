@@ -34,4 +34,9 @@ public class UserDAO {
         DBHelp.update(sql,user.getPassword(),user.getEmail(),user.getPhone(),user.getState(),user.getAvatar(),user.getId());
         logger.debug("update的sql语句为：{}",sql);
     }
+
+    public User findById(Integer userId) {
+        String sql = "select id,username,password,email,createTime,phone,state,avatar from user where id=? ";
+        return DBHelp.query(sql,new BeanHandler<>(User.class),userId);
+    }
 }

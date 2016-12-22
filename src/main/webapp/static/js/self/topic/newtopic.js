@@ -19,7 +19,7 @@ $(function () {
         messages : {
             title : {
                 required : "请输入标题",
-                maxlength : $.validator.format("标题长度最长为100个字符")
+                maxlength : "标题长度最长为100个字符"
             },
             node : {
                 required : "请选择发帖类型"
@@ -30,10 +30,10 @@ $(function () {
                 url : "/newtopic",
                 type : "post",
                 data : $(form).serialize(),
-                success : function (data) {
-                    if(data.state = 'success') {
-                        alert("发帖成功，等待人工审核通过后方可查看");
-                        window.location.href = "/home";
+                success : function (json) {
+                    if(json.state = 'success') {
+                        alert("发帖成功，等待人工审核通过后方可在主页显示");
+                        window.location.href = "/topicdetail?topicId=" + json.data;
                     } else {
                         alert('发帖失败，请稍候再试！');
                     }

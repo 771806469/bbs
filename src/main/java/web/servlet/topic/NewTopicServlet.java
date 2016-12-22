@@ -1,7 +1,9 @@
 package web.servlet.topic;
 
+import dto.JsonResult;
 import entity.Node;
 import entity.User;
+import exception.ServiceException;
 import service.NodeService;
 import service.TopicService;
 import util.BaseServlet;
@@ -34,6 +36,15 @@ public class NewTopicServlet extends BaseServlet {
         Integer nodeId = Integer.valueOf(req.getParameter("node"));
 
         User user = (User)getSessionValue(req,"curr_user");
-        topicService.saveTopic(user,title,content,nodeId);
+        JsonResult result = new JsonResult();
+        try {
+            Integer topicId = topicService.saveTopic(user, title, content, nodeId);
+            result.setState(JsonResult.SUCCESS);
+            result.setData(topicId);
+        } catch(ServiceException ex) {
+            result.setState(JsonResult.ERROR);
+            result.setMessage(ex.getMessage());
+        }
+       renderJson(resp,result);
     }
 }

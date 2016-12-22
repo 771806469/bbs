@@ -31,10 +31,8 @@ public class NodeDAO {
         return DBHelp.query(sql,new BeanHandler<>(Node.class),nodeId);
     }
 
-    public void updateById(Integer nodeId) {
-        Node node = findNodeById(nodeId);
-        node.setTopicNum(node.getTopicNum()+1);
-        logger.debug("nodeName为{}的节点帖子数量增加一个",node.getNodeName());
-        update(node);
-    }
+
+
+
+
 }
