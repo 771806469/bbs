@@ -26,7 +26,7 @@
             <table class="talk-table">
                 <tr>
                     <td width="50">
-                        <img class="avatar" src="/static/img/avatra.jpg" width="40" height="40" alt="">
+                        <img class="avatar" src="/static/img/avatar.jpg" width="40" height="40" alt="">
                     </td>
                     <td width="80">
                         <a href="">fankay</a>
@@ -45,7 +45,7 @@
             <table class="talk-table">
                 <tr>
                     <td width="50">
-                        <img class="avatar" src="/static/img/avatra.jpg" width="40" height="40" alt="">
+                        <img class="avatar" src="/static/img/avatar.jpg" width="40" height="40" alt="">
                     </td>
                     <td width="80">
                         <a href="">fankay</a>
@@ -64,7 +64,7 @@
             <table class="talk-table">
                 <tr>
                     <td width="50">
-                        <img class="avatar" src="/static/img/avatra.jpg" width="40" height="40" alt="">
+                        <img class="avatar" src="/static/img/avatar.jpg" width="40" height="40" alt="">
                     </td>
                     <td width="80">
                         <a href="">fankay</a>
@@ -83,7 +83,7 @@
             <table class="talk-table">
                 <tr>
                     <td width="50">
-                        <img class="avatar" src="/static/img/avatra.jpg" width="40" height="40" alt="">
+                        <img class="avatar" src="/static/img/avatar.jpg" width="40" height="40" alt="">
                     </td>
                     <td width="80">
                         <a href="">fankay</a>
@@ -102,7 +102,7 @@
             <table class="talk-table">
                 <tr>
                     <td width="50">
-                        <img class="avatar" src="/static/img/avatra.jpg" width="40" height="40" alt="">
+                        <img class="avatar" src="/static/img/avatar.jpg" width="40" height="40" alt="">
                     </td>
                     <td width="80">
                         <a href="">fankay</a>
@@ -121,7 +121,7 @@
             <table class="talk-table">
                 <tr>
                     <td width="50">
-                        <img class="avatar" src="/static/img/avatra.jpg" width="40" height="40" alt="">
+                        <img class="avatar" src="/static/img/avatar.jpg" width="40" height="40" alt="">
                     </td>
                     <td width="80">
                         <a href="">fankay</a>
@@ -140,7 +140,7 @@
             <table class="talk-table">
                 <tr>
                     <td width="50">
-                        <img class="avatar" src="/static/img/avatra.jpg" width="40" height="40" alt="">
+                        <img class="avatar" src="/static/img/avatar.jpg" width="40" height="40" alt="">
                     </td>
                     <td width="80">
                         <a href="">fankay</a>
@@ -159,7 +159,7 @@
             <table class="talk-table">
                 <tr>
                     <td width="50">
-                        <img class="avatar" src="/static/img/avatra.jpg" width="40" height="40" alt="">
+                        <img class="avatar" src="/static/img/avatar.jpg" width="40" height="40" alt="">
                     </td>
                     <td width="80">
                         <a href="">fankay</a>
@@ -178,7 +178,7 @@
             <table class="talk-table">
                 <tr>
                     <td width="50">
-                        <img class="avatar" src="/static/img/avatra.jpg" width="40" height="40" alt="">
+                        <img class="avatar" src="/static/img/avatar.jpg" width="40" height="40" alt="">
                     </td>
                     <td width="80">
                         <a href="">fankay</a>
@@ -197,7 +197,7 @@
             <table class="talk-table">
                 <tr>
                     <td width="50">
-                        <img class="avatar" src="/static/img/avatra.jpg" width="40" height="40" alt="">
+                        <img class="avatar" src="/static/img/avatar.jpg" width="40" height="40" alt="">
                     </td>
                     <td width="80">
                         <a href="">fankay</a>
@@ -216,7 +216,7 @@
             <table class="talk-table">
                 <tr>
                     <td width="50">
-                        <img class="avatar" src="/static/img/avatra.jpg" width="40" height="40" alt="">
+                        <img class="avatar" src="/static/img/avatar.jpg" width="40" height="40" alt="">
                     </td>
                     <td width="80">
                         <a href="">fankay</a>
@@ -235,7 +235,7 @@
             <table class="talk-table">
                 <tr>
                     <td width="50">
-                        <img class="avatar" src="/static/img/avatra.jpg" width="40" height="40" alt="">
+                        <img class="avatar" src="/static/img/avatar.jpg" width="40" height="40" alt="">
                     </td>
                     <td width="80">
                         <a href="">fankay</a>
@@ -254,7 +254,7 @@
             <table class="talk-table">
                 <tr>
                     <td width="50">
-                        <img class="avatar" src="/static/img/avatra.jpg" width="40" height="40" alt="">
+                        <img class="avatar" src="/static/img/avatar.jpg" width="40" height="40" alt="">
                     </td>
                     <td width="80">
                         <a href="">fankay</a>
@@ -273,7 +273,7 @@
             <table class="talk-table">
                 <tr>
                     <td width="50">
-                        <img class="avatar" src="/static/img/avatra.jpg" width="40" height="40" alt="">
+                        <img class="avatar" src="/static/img/avatar.jpg" width="40" height="40" alt="">
                     </td>
                     <td width="80">
                         <a href="">fankay</a>
@@ -292,7 +292,7 @@
             <table class="talk-table">
                 <tr>
                     <td width="50">
-                        <img class="avatar" src="/static/img/avatra.jpg" width="40" height="40" alt="">
+                        <img class="avatar" src="/static/img/avatar.jpg" width="40" height="40" alt="">
                     </td>
                     <td width="80">
                         <a href="">fankay</a>

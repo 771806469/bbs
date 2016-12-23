@@ -28,4 +28,10 @@ public class TopicDAO {
         String sql = "select id,title,content,createtime,clicknum,favnum,thanksnum,replynum,lastreplytime,userid,nodeid from t_topic where id=?";
         return DBHelp.query(sql,new BeanHandler<>(Topic.class),topicId);
     }
+
+    public void updateTopic(Topic topic) {
+        String sql = "update t_topic set title = ? ,content = ? ,clicknum = ?,favnum = ?,thanksnum = ?,replynum = ?,lastreplytime = ?, nodeid = ?,userid = ? where id = ?";
+        DBHelp.update(sql,topic.getTitle(),topic.getContent(),topic.getClickNum(),topic.getFavNum(),topic.getThanksNum(),topic.getReplyNum(),topic.getLastReplyTime(),topic.getNodeId(),topic.getUserId(),topic.getId());
+
+    }
 }

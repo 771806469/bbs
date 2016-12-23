@@ -1,5 +1,7 @@
 package web.servlet.topic;
 
+import com.qiniu.util.Auth;
+import com.qiniu.util.StringMap;
 import dto.JsonResult;
 import entity.Node;
 import entity.User;
@@ -7,6 +9,7 @@ import exception.ServiceException;
 import service.NodeService;
 import service.TopicService;
 import util.BaseServlet;
+import util.Config;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +27,12 @@ public class NewTopicServlet extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Node> nodeList = nodeService.findAllNode();
+        Auth auth = Auth.create(Config.get("ak"),Config.get("sk"));
+        StringMap stringMap = new StringMap();
+        stringMap.put("returnBody","{ \"success\": true,\"file_path\": \"" + Config.get("qiniu.domain") + "${key}\"}");
+        String token = auth.uploadToken(Config.get("bucket"),null,3600,stringMap);
 
+        req.setAttribute("token",token);
         req.setAttribute("nodeList",nodeList);
         forward("topic/newtopic",req,resp);
     }

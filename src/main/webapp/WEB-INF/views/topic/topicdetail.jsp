@@ -16,6 +16,9 @@
     <link href="http://cdn.bootcss.com/bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/js/editer/styles/simditor.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/highlight/agate.css">
+    <link rel="stylesheet" href="/static/css/simditor-emoji.css">
     <style>
         body {
             background-image: url(/static/img/bg.jpg);
@@ -32,164 +35,83 @@
 <c:choose>
     <c:when test="${not empty requestScope.topic}">
         <div class="container">
-            <div class="box">
+        <div class="box">
 
-                <ul class="breadcrumb" style="background-color: #fff;margin-bottom: 0px;">
-                    <li><a href="#">首页</a> <span class="divider">/</span></li>
-                    <li class="active">${requestScope.nodeName}</li>
-                </ul>
-                <div class="topic-head">
-                    <img class="img-rounded avatar"
-                         src="http://7xp5t4.com1.z0.glb.clouddn.com/${requestScope.userAvatar}?imageView2/1/w/60/h/60"
-                         alt="">
-                    <h3 class="title">${requestScope.topic.title}</h3>
-                    <p class="topic-msg muted"><a href="">${requestScope.userName}</a> · 9小时前</p>
-                </div>
-                <div class="topic-body">
+            <ul class="breadcrumb" style="background-color: #fff;margin-bottom: 0px;">
+                <li><a href="#">首页</a> <span class="divider">/</span></li>
+                <li class="active">${requestScope.nodeName}</li>
+            </ul>
+            <div class="topic-head">
+                <img class="img-rounded avatar"
+                     src="http://ohwtqwe8j.bkt.clouddn.com/${requestScope.userAvatar}?imageView2/1/w/60/h/60"
+                     alt="">
+                <h3 class="title">${requestScope.topic.title}</h3>
+                <p class="topic-msg muted"><a href="">${requestScope.userName}</a> · 9小时前</p>
+            </div>
+            <div class="topic-body">
                     ${requestScope.topic.content}
-                </div>
-                <div class="topic-toolbar">
-                    <ul class="unstyled inline pull-left">
-                        <li><a href="">加入收藏</a></li>
-                        <li><a href="">感谢</a></li>
-                        <li><a href=""></a></li>
-                    </ul>
-                    <ul class="unstyled inline pull-right muted">
-                        <li>${requestScope.topic.clickNum}次点击</li>
-                        <li>${requestScope.topic.favNum}人收藏</li>
-                        <li>${requestScope.topic.thanksNum}人感谢</li>
-                    </ul>
-                </div>
             </div>
-            <!--box end-->
-
-            <div class="box" style="margin-top:20px;">
-                <div class="talk-item muted" style="font-size: 12px">
-                    9个回复 | 直到2015年12月25日 22:23:34
-                </div>
-                <div class="talk-item">
-                    <table class="talk-table">
-                        <tr>
-                            <td width="50">
-                                <img class="avatar"
-                                     src="http://7xp5t4.com1.z0.glb.clouddn.com/Fqb8f9uDknAt2ilBoY-ipSZRMes-?imageView2/1/w/40/h/40"
-                                     alt="">
-                            </td>
-                            <td width="auto">
-                                <a href="" style="font-size: 12px">fankay</a> <span style="font-size: 12px"
-                                                                                    class="reply">4小时前</span>
-                                <br>
-                                <p style="font-size: 14px">不知道国内有哪些公司开始用 react-native 了呢？我就知道天猫 Pad 版部分</p>
-                            </td>
-                            <td width="70" align="right" style="font-size: 12px">
-                                <a href="" title="回复"><i class="fa fa-reply"></i></a>&nbsp;
-                                <span class="badge">1</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="talk-item">
-                    <table class="talk-table">
-                        <tr>
-                            <td width="50">
-                                <img class="avatar"
-                                     src="http://7xp5t4.com1.z0.glb.clouddn.com/Fqb8f9uDknAt2ilBoY-ipSZRMes-?imageView2/1/w/40/h/40"
-                                     alt="">
-                            </td>
-                            <td width="auto">
-                                <a href="" style="font-size: 12px">fankay</a> <span style="font-size: 12px"
-                                                                                    class="reply">4小时前</span>
-                                <br>
-                                <p style="font-size: 14px">不知道国内有哪些公司开始用 react-native 了呢？我就知道天猫 Pad 版部分</p>
-                            </td>
-                            <td width="70" align="right" style="font-size: 12px">
-                                <a href="" title="回复"><i class="fa fa-reply"></i></a>&nbsp;
-                                <span class="badge">2</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="talk-item">
-                    <table class="talk-table">
-                        <tr>
-                            <td width="50">
-                                <img class="avatar"
-                                     src="http://7xp5t4.com1.z0.glb.clouddn.com/Fqb8f9uDknAt2ilBoY-ipSZRMes-?imageView2/1/w/40/h/40"
-                                     alt="">
-                            </td>
-                            <td width="auto">
-                                <a href="" style="font-size: 12px">fankay</a> <span style="font-size: 12px"
-                                                                                    class="reply">4小时前</span>
-                                <br>
-                                <p style="font-size: 14px">不知道国内有哪些公司开始用 react-native 了呢？我就知道天猫 Pad 版部分</p>
-                            </td>
-                            <td width="70" align="right" style="font-size: 12px">
-                                <a href="" title="回复"><i class="fa fa-reply"></i></a>&nbsp;
-                                <span class="badge">3</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="talk-item">
-                    <table class="talk-table">
-                        <tr>
-                            <td width="50">
-                                <img class="avatar"
-                                     src="http://7xp5t4.com1.z0.glb.clouddn.com/Fqb8f9uDknAt2ilBoY-ipSZRMes-?imageView2/1/w/40/h/40"
-                                     alt="">
-                            </td>
-                            <td width="auto">
-                                <a href="" style="font-size: 12px">fankay</a> <span style="font-size: 12px"
-                                                                                    class="reply">4小时前</span>
-                                <br>
-                                <p style="font-size: 14px">不知道国内有哪些公司开始用 react-native 了呢？我就知道天猫 Pad 版部分</p>
-                            </td>
-                            <td width="70" align="right" style="font-size: 12px">
-                                <a href="" title="回复"><i class="fa fa-reply"></i></a>&nbsp;
-                                <span class="badge">4</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="talk-item">
-                    <table class="talk-table">
-                        <tr>
-                            <td width="50">
-                                <img class="avatar"
-                                     src="http://7xp5t4.com1.z0.glb.clouddn.com/Fqb8f9uDknAt2ilBoY-ipSZRMes-?imageView2/1/w/40/h/40"
-                                     alt="">
-                            </td>
-                            <td width="auto">
-                                <a href="" style="font-size: 12px">fankay</a> <span style="font-size: 12px"
-                                                                                    class="reply">4小时前</span>
-                                <br>
-                                <p style="font-size: 14px">不知道国内有哪些公司开始用 react-native 了呢？我就知道天猫 Pad 版部分</p>
-                            </td>
-                            <td width="70" align="right" style="font-size: 12px">
-                                <a href="" title="回复"><i class="fa fa-reply"></i></a>&nbsp;
-                                <span class="badge">50</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-            </div>
-
-            <div class="box" style="margin:20px 0px;">
-                <div class="talk-item muted" style="font-size: 12px"><i class="fa fa-plus"></i> 添加一条新回复</div>
-                <form action="" style="padding: 15px;margin-bottom:0px;">
-                    <textarea name="" id="editor"></textarea>
-                </form>
-                <div class="talk-item muted" style="text-align: right;font-size: 12px">
-                    <span class="pull-left">请尽量让自己的回复能够对别人有帮助回复</span>
-                    <button class="btn btn-primary">发布</button>
-                </div>
+            <div class="topic-toolbar">
+                <ul class="unstyled inline pull-left">
+                    <li><a href="">加入收藏</a></li>
+                    <li><a href="">感谢</a></li>
+                    <li><a href=""></a></li>
+                </ul>
+                <ul class="unstyled inline pull-right muted">
+                    <li>${requestScope.topic.clickNum}次点击</li>
+                    <li>${requestScope.topic.favNum}人收藏</li>
+                    <li>${requestScope.topic.thanksNum}人感谢</li>
+                </ul>
             </div>
         </div>
+        <!--box end-->
+        <div class="box" style="margin-top:20px;">
+            <div class="talk-item muted" style="font-size: 12px">
+                    ${topic.replyNum}个回复 | 直到2015年12月25日 22:23:34
+            </div>
+            <div class="talk-item">
+                <table class="talk-table">
+                    <tr>
+                        <td width="50">
+                            <img class="avatar" src="/static/img/avatar.jpg" alt="">
+                        </td>
+                        <td width="auto">
+                            <a href="" style="font-size: 12px">fankay</a> <span style="font-size: 12px" class="reply">4小时前</span>
+                            <br>
+                            <p style="font-size: 14px">不知道国内有哪些公司开始用 react-native 了呢？我就知道天猫 Pad 版部分</p>
+                        </td>
+                        <td width="70" align="right" style="font-size: 12px">
+                            <a href="" title="回复"><i class="fa fa-reply"></i></a>&nbsp;
+                            <span class="badge">1</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <c:choose>
+            <c:when test="${not empty sessionScope.curr_user}">
+                <div class="box" style="margin:20px 0px;">
+                    <div class="talk-item muted" style="font-size: 12px"><i class="fa fa-plus"></i> 添加一条新回复</div>
+                    <form id="replyForm" action="/reply" method="post" style="padding: 15px;margin-bottom:0px;">
+                        <input type="hidden" name="topicId" value="${topic.id}">
+                        <textarea name="content" id="editor"></textarea>
+                    </form>
+                    <div class="talk-item muted" style="text-align: right;font-size: 12px">
+                        <span class="pull-left">请尽量让自己的回复能够对别人有帮助回复</span>
+                        <button id="replyBtn" class="btn btn-primary">发布</button>
+                    </div>
+                    <a name="reply"></a>
+                </div>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div class="box" style="margin:10px 0px;">
+                    <div class="talk-item"> 请<a href="/login?redirect=/topicdetail?topicId=${topic.id}#reply">登录</a>后再回复</div>
+                </div>
+            </c:otherwise>
+        </c:choose>
+
     </c:when>
     <c:otherwise>
         <div class="container">
@@ -215,15 +137,79 @@
 <script src="/static/js/editer/scripts/module.min.js"></script>
 <script src="/static/js/editer/scripts/hotkeys.min.js"></script>
 <script src="/static/js/editer/scripts/uploader.min.js"></script>
-<script src="/statjs/editer/scripts/simditor.min.js"></script>
+<script src="/static/js/editer/scripts/simditor.min.js"></script>
+<script src="/static/js/jquery.validate.min.js"></script>
+<script src="/static/js/simditor-emoji.js"></script>
+<script src="/static/js/highlight.pack.js"></script>
+<script></script>
 <script>
     $(function () {
-        var editor = new Simditor({
-            textarea: $('#editor'),
-            toolbar: false
-            //optional options
+
+<c:choose>
+        <c:when test="${not empty sessionScope.curr_user}">
+            var editor = new Simditor({
+                textarea: $('#editor'),
+                toolbar: ['emoji'],
+                //optional options
+                emoji: {
+                    imagePath: "/static/img/emoji/",
+                    images: ['smile.png', 'smiley.png', 'laughing.png', 'blush.png', 'heart_eyes.png', 'smirk.png', 'flushed.png', 'grin.png', 'wink.png', 'kissing_closed_eyes.png', 'stuck_out_tongue_winking_eye.png', 'stuck_out_tongue.png', 'sleeping.png', 'worried.png', 'expressionless.png', 'sweat_smile.png', 'cold_sweat.png', 'joy.png', 'sob.png', 'angry.png', 'mask.png', 'scream.png', 'sunglasses.png', 'heart.png', 'broken_heart.png', 'star.png', 'anger.png', 'exclamation.png', 'question.png', 'zzz.png', 'thumbsup.png', 'thumbsdown.png', 'ok_hand.png', 'punch.png', 'v.png', 'clap.png', 'muscle.png', 'pray.png', 'skull.png', 'trollface.png'],
+                }
+            });
+        </c:when>
+        </c:choose>
+
+
+
+
+        $("#replyBtn").click(function () {
+
+            $("#replyForm").submit();
         });
-    });
+
+
+//        $("#replyForm").validate({
+//            errorElement : "span",
+//            errorClass : "text-error",
+//            rules : {
+//                content : {
+//                    required : true,
+//                    maxlength : 200
+//                }
+//            },
+//            messages : {
+//                content : {
+//                    required : "请输入回复内容",
+//                    maxlength : "最多回复200个字符"
+//                }
+//            },
+//            submitHandler : function (form) {
+//                $.ajax({
+//                    url : "/reply",
+//                    type : "post",
+//                    data : $(form).serialize(),
+//                    beforeSend : function () {
+//                        $("#replyBtn").html("发布中<img src='/static/img/loding.gif'>").attr("disabled,disabled");
+//                    },
+//                    success : function (data) {
+//                        if(data.state == 'success') {
+//
+//                        } else {
+//
+//                        }
+//                    },
+//                    error : function () {
+//                        alert("服务器访问错误！");
+//                    },
+//                    complete : function () {
+//                        $("#replyBtn").html("发布").removeAttr("disabled");
+//                    }
+//                });
+//            }
+//        });
+//
+//        hljs.initHighlightingOnLoad();
+        });
 </script>
 
 </body>

@@ -29,69 +29,17 @@
                 <div class="alert alert-success">
                         ${requestScope.logout}
                 </div>
-                <form action="" id="loginFormO" class="form-horizontal">
-                    <div class="control-group">
-                        <label class="control-label">账号</label>
-                        <div class="controls">
-                            <input name="username" type="text">
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">密码</label>
-                        <div class="controls">
-                            <input name="password" type="password">
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label"></label>
-                        <div class="controls">
-                            <a href="/foundpassword">忘记密码</a>
-                        </div>
-                    </div>
 
-                    <div class="form-actions">
-                        <button id="loginBtnO" type="button" class="btn btn-primary">登录</button>
-
-                        <a class="pull-right" href="/reg">注册账号</a>
-                    </div>
-
-                </form>
 
             </c:when>
             <c:when test="${not empty param.redirect}">
                 <div id="redirectURL" class="alert alert-error">
                         请登录后再操作
                 </div>
-                <form action="" id="loginFormF" class="form-horizontal">
-                    <div class="control-group">
-                        <label class="control-label">账号</label>
-                        <div class="controls">
-                            <input name="username" type="text">
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">密码</label>
-                        <div class="controls">
-                            <input name="password" type="password">
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label"></label>
-                        <div class="controls">
-                            <a href="/foundpassword">忘记密码</a>
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button id="loginBtnF" type="button" class="btn btn-primary">登录</button>
-
-                        <a class="pull-right" href="/reg">注册账号</a>
-                    </div>
-
-                </form>
 
             </c:when>
-            <c:otherwise>
+        </c:choose>
+
                 <form action="" id="loginForm" class="form-horizontal">
                     <div class="control-group">
                         <label class="control-label">账号</label>
@@ -119,8 +67,8 @@
                     </div>
 
                 </form>
-            </c:otherwise>
-        </c:choose>
+
+
 
 
     </div>
