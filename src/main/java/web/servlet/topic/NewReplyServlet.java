@@ -25,24 +25,21 @@ public class NewReplyServlet extends BaseServlet {
         User user = (User)getSessionValue(req,"curr_user");
         //判断topicId是否为空
         if(StringUtils.isEmpty(topicId)) {
-            HttpSession session = req.getSession();
-            session.setAttribute("error","该帖不存在或已被删除！");
-            resp.sendRedirect("/WEB-INF/views/topic/topicerror.jsp");
-        }
-
-        if(StringUtils.isNotEmpty(content)) {
-            try {
-                replyService.addReply(topicId, content, user);
-                resp.sendRedirect("/topicdetail?topicId=" + topicId);
-            } catch(ServiceException ex) {
-                HttpSession session = req.getSession();
-                session.setAttribute("error",ex.getMessage());
-                resp.sendRedirect("/WEB-INF/views/topic/topicdetail.jsp?error=1001");
+            req.setAttribute("error","该帖不存在或已被删除！");
+            forward("topic/topicerror",req,resp);
+        }else {
+            if (StringUtils.isNotEmpty(content)) {
+                try {
+                    replyService.addReply(topicId, content, user);
+                    resp.sendRedirect("/topicdetail?topicId=" + topicId);
+                } catch (ServiceException ex) {
+                    req.setAttribute("error", ex.getMessage());
+                    forward("topic/topicerror",req,resp);
+                }
+            } else {
+                req.setAttribute("error", "回复不能为空！");
+                forward("topic/topicdetail?topicId=" + topicId,req,resp);
             }
-        } else {
-            HttpSession session = req.getSession();
-            session.setAttribute("error","回复不能为空！");
-            resp.sendRedirect("/WEB-INF/views/topic/topicerror.jsp");
         }
 
 

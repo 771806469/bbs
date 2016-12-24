@@ -19,8 +19,8 @@
         </div>
         <div class="box-padding">
             <c:choose>
-                <c:when test="${not empty sessionScope.error}">
-                    <h4 style="font-size: 18px">${sessionScope.error}</h4>
+                <c:when test="${not empty requestScope.error}">
+                    <h4 style="font-size: 18px">${requestScope.error}</h4>
                 </c:when>
             </c:choose>
         </div>

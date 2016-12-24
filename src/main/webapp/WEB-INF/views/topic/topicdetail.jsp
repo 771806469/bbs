@@ -23,6 +23,9 @@
         body {
             background-image: url(/static/img/bg.jpg);
         }
+        .topic-body img {
+            width: 200px;
+        }
 
         .simditor .simditor-body {
             min-height: 100px;
@@ -34,6 +37,7 @@
 <!--header-bar end-->
 <c:choose>
     <c:when test="${not empty requestScope.topic}">
+        <div class="alert alert-error">${requestScope.error}</div>
         <div class="container">
         <div class="box">
 
@@ -101,9 +105,9 @@
                         <span class="pull-left">请尽量让自己的回复能够对别人有帮助回复</span>
                         <button id="replyBtn" class="btn btn-primary">发布</button>
                     </div>
-                    <a name="reply"></a>
                 </div>
                 </div>
+                <a name="reply"></a>
             </c:when>
             <c:otherwise>
                 <div class="box" style="margin:10px 0px;">

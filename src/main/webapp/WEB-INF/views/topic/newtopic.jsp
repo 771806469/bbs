@@ -18,6 +18,13 @@
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/simditor-emoji.css">
     <link rel="stylesheet" href="/static/css/highlight/agate.css">
+    <style>
+
+        .content img {
+            width: 200px;
+        }
+
+    </style>
 </head>
 <body>
 <%@include file="../include/navbar.jsp" %>
@@ -33,7 +40,7 @@
             <input name="title" id="title" type="text" style="width: 100%;box-sizing: border-box;height: 30px"
                    placeholder="请输入主题标题，如果标题能够表达完整内容，则正文可以为空">
             <label class="control-label">正文</label>
-            <textarea name="content" id="editor"></textarea>
+            <textarea name="content" class="content" id="editor"></textarea>
 
             <select name="node" id="node" style="margin-top:15px;">
                 <option value="">请选择节点</option>

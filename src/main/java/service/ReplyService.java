@@ -9,6 +9,7 @@ import exception.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.ws.Service;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -36,6 +37,7 @@ public class ReplyService {
             topic.setReplyNum(topic.getReplyNum() + 1);
             topic.setLastReplyTime(new Timestamp(new Date().getTime()));
             topicDAO.updateTopic(topic);
+            logger.debug("id为：{}的用户回复了id为{}的帖子",user.getId(),topicId);
         } else {
             throw new ServiceException("该帖不存在或已被删除！");
         }
