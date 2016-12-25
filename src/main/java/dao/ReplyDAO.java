@@ -22,7 +22,7 @@ public class ReplyDAO {
     }
 
     public List<Reply> findListByTopicId(Integer topicId) {
-        String sql = "select tu.id,tu.username,tu.avatar,tr.* from t_reply tr,user tu where tr.userid = tu.id and topicid = ?";
+        String sql = "select tu.id,tu.username,tu.avatar,tr.* from t_reply tr,user tu where tr.userid = tu.id and topicid = ? order by tr.id asc";
 
         return DBHelp.query(sql,new AbstractListHandler<Reply>() {
             @Override
