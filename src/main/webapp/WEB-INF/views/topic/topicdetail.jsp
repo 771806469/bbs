@@ -43,7 +43,7 @@
         <div class="box">
 
             <ul class="breadcrumb" style="background-color: #fff;margin-bottom: 0px;">
-                <li><a href="#">首页</a> <span class="divider">/</span></li>
+                <li><a href="/home">首页</a> <span class="divider">/</span></li>
                 <li class="active">${requestScope.nodeName}</li>
             </ul>
             <div class="topic-head">
@@ -51,7 +51,7 @@
                      src="http://ohwtqwe8j.bkt.clouddn.com/${requestScope.userAvatar}?imageView2/1/w/60/h/60"
                      alt="">
                 <h3 class="title">${requestScope.topic.title}</h3>
-                <p class="topic-msg muted"><a href="">${requestScope.userName}</a> · <span id="topicTime">${topic.createTime}</span></p>
+                <p class="topic-msg muted"><a href="">${requestScope.userName}</a> · <span id="topicTime"></span></p>
             </div>
             <div class="topic-body">
                     ${requestScope.topic.content}
@@ -72,9 +72,9 @@
         <!--box end-->
         <div class="box" style="margin-top:20px;">
             <div class="talk-item muted" style="font-size: 12px">
-                    ${fn:length(replyList)}个回复 |直到 ${topic.lastReplyTime}
+                    ${fn:length(replyList)}个回复 |最近回复时间：<span id="lastReplyTime"></span>
             </div>
-            <c:forEach items="${replyList}" var="reply">
+            <c:forEach items="${replyList}" var="reply" varStatus="vs">
             <div class="talk-item">
                 <table class="talk-table">
                     <tr>
@@ -88,7 +88,7 @@
                         </td>
                         <td width="70" align="right" style="font-size: 12px">
                             <a href="" title="回复"><i class="fa fa-reply"></i></a>&nbsp;
-                            <span class="badge">1楼</span>
+                            <span class="badge">${vs.count}楼</span>
                         </td>
                     </tr>
                 </table>
@@ -167,8 +167,14 @@
         </c:when>
         </c:choose>
 
-
-        $("#topicTime").text(moment)
+        var topicTime = moment("${topic.createTime}");
+        var lastReplyTime = moment("${topic.lastReplyTime}");
+        $("#topicTime").text(topicTime.fromNow());
+        $("#lastReplyTime").text(lastReplyTime.format("yyyy年mm月dd日 hh:mm:ss"));
+        $(".reply").text(function () {
+            var time = moment($(this).text());
+            return time.fromNow();
+        });
 
         $("#replyBtn").click(function () {
 
