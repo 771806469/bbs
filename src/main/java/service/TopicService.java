@@ -8,8 +8,11 @@ import entity.Topic;
 import entity.User;
 import exception.ServiceException;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.sql.Timestamp;
 
 /**
  * Created by Administrator on 2016/12/21 0021.
@@ -34,6 +37,8 @@ public class TopicService {
                 logger.debug("content为null时，content值为：{}",content);
             }
             topic = new Topic(title, content, userId, nodeId);
+            //设置最后回复时间为帖子创建时间
+            topic.setLastReplyTime(new Timestamp(new DateTime().getMillis()));
             //首先根据nodeId查找node,将node的帖子数加一后存入数据库
             Node node = nodeDAO.findNodeById(nodeId);
             node.setTopicNum(node.getTopicNum()+1);
@@ -44,13 +49,6 @@ public class TopicService {
         }
         return topicId;
     }
-
-    /**
-     * 根据帖子ID查找帖子
-     * @param topicId
-     * @return
-     * @throws ServiceException
-     */
     public Topic findTopicById(String topicId) throws ServiceException{
         if(StringUtils.isNumeric(topicId)) {
             Topic topic = topicDAO.findById(Integer.valueOf(topicId));
@@ -62,6 +60,25 @@ public class TopicService {
         } else {
             throw new ServiceException("该帖不存在或已被删除");
         }
+    }
+
+    /**
+     * 根据帖子ID查找帖子
+     * @param topicId
+     * @return
+     * @throws ServiceException
+     */
+    public Topic findTopicById(String topicId,Integer curr_userId) throws ServiceException{
+        Topic topic = findTopicById(topicId);
+        Integer userId = topic.getUserId();
+        //如果查看帖子的用户不是帖子的作者，帖子点击量加一
+        if(curr_userId != null && userId != null){
+            if(!curr_userId.equals(userId)) {
+                topic.setClickNum(topic.getClickNum() + 1);
+                topicDAO.updateTopic(topic);
+            }
+        }
+        return topic;
     }
 
     /**

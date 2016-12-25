@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import javax.xml.ws.Service;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/12/23 0023.
@@ -35,6 +36,7 @@ public class ReplyService {
             replyDAO.addReply(reply);
             //更新topic表中对应的回复数量和最后回复时间
             topic.setReplyNum(topic.getReplyNum() + 1);
+            logger.debug("新增了回复之后，id为{}的帖子回复数量为：{}",topicId,topic.getReplyNum() + 1);
             topic.setLastReplyTime(new Timestamp(new Date().getTime()));
             topicDAO.updateTopic(topic);
             logger.debug("id为：{}的用户回复了id为{}的帖子",user.getId(),topicId);
@@ -43,5 +45,8 @@ public class ReplyService {
         }
     }
 
+    public List<Reply> findListByTopicId(Integer topicId) {
+        return replyDAO.findListByTopicId(topicId);
+    }
 
 }

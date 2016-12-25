@@ -7,11 +7,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>主题页</title>
+    <title>凯盛IT-${topic.title}</title>
     <link href="http://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
@@ -50,7 +51,7 @@
                      src="http://ohwtqwe8j.bkt.clouddn.com/${requestScope.userAvatar}?imageView2/1/w/60/h/60"
                      alt="">
                 <h3 class="title">${requestScope.topic.title}</h3>
-                <p class="topic-msg muted"><a href="">${requestScope.userName}</a> · 9小时前</p>
+                <p class="topic-msg muted"><a href="">${requestScope.userName}</a> · <span id="topicTime">${topic.createTime}</span></p>
             </div>
             <div class="topic-body">
                     ${requestScope.topic.content}
@@ -71,27 +72,28 @@
         <!--box end-->
         <div class="box" style="margin-top:20px;">
             <div class="talk-item muted" style="font-size: 12px">
-                    ${topic.replyNum}个回复 | 直到2015年12月25日 22:23:34
+                    ${fn:length(replyList)}个回复 |直到 ${topic.lastReplyTime}
             </div>
+            <c:forEach items="${replyList}" var="reply">
             <div class="talk-item">
                 <table class="talk-table">
                     <tr>
                         <td width="50">
-                            <img class="avatar" src="/static/img/avatar.jpg" alt="">
+                            <img class="avatar" src="${reply.user.avatar}?imageView2/1/w/50/h/50" alt="用户头像">
                         </td>
                         <td width="auto">
-                            <a href="" style="font-size: 12px">fankay</a> <span style="font-size: 12px" class="reply">4小时前</span>
+                            <a href="" style="font-size: 12px">${reply.user.username}</a> <span style="font-size: 12px" class="reply">${reply.createTime}</span>
                             <br>
-                            <p style="font-size: 14px">不知道国内有哪些公司开始用 react-native 了呢？我就知道天猫 Pad 版部分</p>
+                            <p style="font-size: 14px">${reply.content}</p>
                         </td>
                         <td width="70" align="right" style="font-size: 12px">
                             <a href="" title="回复"><i class="fa fa-reply"></i></a>&nbsp;
-                            <span class="badge">1</span>
+                            <span class="badge">1楼</span>
                         </td>
                     </tr>
                 </table>
             </div>
-
+            </c:forEach>
         </div>
         <c:choose>
             <c:when test="${not empty sessionScope.curr_user}">
@@ -145,6 +147,8 @@
 <script src="/static/js/jquery.validate.min.js"></script>
 <script src="/static/js/simditor-emoji.js"></script>
 <script src="/static/js/highlight.pack.js"></script>
+<script src="//cdn.bootcss.com/moment.js/2.10.6/moment.min.js"></script>
+<script src="//cdn.bootcss.com/moment.js/2.10.6/locale/zh-cn.js"></script>
 <script></script>
 <script>
     $(function () {
@@ -164,7 +168,7 @@
         </c:choose>
 
 
-
+        $("#topicTime").text(moment)
 
         $("#replyBtn").click(function () {
 

@@ -12,6 +12,7 @@ public class Reply {
     private Timestamp createTime;
     private Integer userId;
     private Integer topicId;
+    private User user;
 
     public Integer getId() {
         return id;
@@ -51,5 +52,13 @@ public class Reply {
 
     public void setTopicId(Integer topicId) {
         this.topicId = topicId;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
     }
 }
