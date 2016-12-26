@@ -24,6 +24,7 @@
         body {
             background-image: url(/static/img/bg.jpg);
         }
+
         .topic-body img {
             width: 200px;
         }
@@ -75,24 +76,27 @@
                     ${fn:length(replyList)}个回复 |最近回复时间：<span id="lastReplyTime"></span>
             </div>
             <c:forEach items="${replyList}" var="reply" varStatus="vs">
-            <div class="talk-item">
-                <table class="talk-table">
-                    <tr>
-                        <td width="50">
-                            <img class="avatar" src="${reply.user.avatar}?imageView2/1/w/50/h/50" alt="用户头像">
-                        </td>
-                        <td width="auto">
-                            <a href="" style="font-size: 12px">${reply.user.username}</a> <span style="font-size: 12px" class="reply">${reply.createTime}</span>
-                            <br>
-                            <p style="font-size: 14px">${reply.content}</p>
-                        </td>
-                        <td width="70" align="right" style="font-size: 12px">
-                            <a href="" title="回复"><i class="fa fa-reply"></i></a>&nbsp;
-                            <span class="badge">${vs.count}楼</span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+                <div class="talk-item">
+                    <table class="talk-table">
+                        <tr>
+                            <td width="50">
+
+                                <img class="avatar" src="${reply.user.avatar}?imageView2/1/w/50/h/50" alt="用户头像">
+                            </td>
+                            <td width="auto">
+                                <a href="" style="font-size: 12px">${reply.user.username}</a> <span
+                                    style="font-size: 12px" class="reply">${reply.createTime}</span>
+                                <br>
+                                <p style="font-size: 14px">${reply.content}</p>
+                            </td>
+                            <td width="70" align="right" style="font-size: 12px">
+                                <a href="javascript:;" rel="${vs.count}" class="replyLink" title="回复"><i
+                                        class="fa fa-reply"></i></a>&nbsp;
+                                <span class="badge"><a name="reply${vs.count}"></a>${vs.count -1}楼</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </c:forEach>
         </div>
         <c:choose>
@@ -113,7 +117,8 @@
             </c:when>
             <c:otherwise>
                 <div class="box" style="margin:10px 0px;">
-                    <div class="talk-item"> 请<a href="/login?redirect=/topicdetail?topicId=${topic.id}#reply">登录</a>后再回复</div>
+                    <div class="talk-item"> 请<a href="/login?redirect=/topicdetail?topicId=${topic.id}#reply">登录</a>后再回复
+                    </div>
                 </div>
             </c:otherwise>
         </c:choose>
@@ -153,17 +158,17 @@
 <script>
     $(function () {
 
-<c:choose>
+        <c:choose>
         <c:when test="${not empty sessionScope.curr_user}">
-            var editor = new Simditor({
-                textarea: $('#editor'),
-                toolbar: ['emoji'],
-                //optional options
-                emoji: {
-                    imagePath: "/static/img/emoji/",
-                    images: ['smile.png', 'smiley.png', 'laughing.png', 'blush.png', 'heart_eyes.png', 'smirk.png', 'flushed.png', 'grin.png', 'wink.png', 'kissing_closed_eyes.png', 'stuck_out_tongue_winking_eye.png', 'stuck_out_tongue.png', 'sleeping.png', 'worried.png', 'expressionless.png', 'sweat_smile.png', 'cold_sweat.png', 'joy.png', 'sob.png', 'angry.png', 'mask.png', 'scream.png', 'sunglasses.png', 'heart.png', 'broken_heart.png', 'star.png', 'anger.png', 'exclamation.png', 'question.png', 'zzz.png', 'thumbsup.png', 'thumbsdown.png', 'ok_hand.png', 'punch.png', 'v.png', 'clap.png', 'muscle.png', 'pray.png', 'skull.png', 'trollface.png'],
-                }
-            });
+        var editor = new Simditor({
+            textarea: $('#editor'),
+            toolbar: ['emoji'],
+            //optional options
+            emoji: {
+                imagePath: "/static/img/emoji/",
+                images: ['smile.png', 'smiley.png', 'laughing.png', 'blush.png', 'heart_eyes.png', 'smirk.png', 'flushed.png', 'grin.png', 'wink.png', 'kissing_closed_eyes.png', 'stuck_out_tongue_winking_eye.png', 'stuck_out_tongue.png', 'sleeping.png', 'worried.png', 'expressionless.png', 'sweat_smile.png', 'cold_sweat.png', 'joy.png', 'sob.png', 'angry.png', 'mask.png', 'scream.png', 'sunglasses.png', 'heart.png', 'broken_heart.png', 'star.png', 'anger.png', 'exclamation.png', 'question.png', 'zzz.png', 'thumbsup.png', 'thumbsdown.png', 'ok_hand.png', 'punch.png', 'v.png', 'clap.png', 'muscle.png', 'pray.png', 'skull.png', 'trollface.png'],
+            }
+        });
         </c:when>
         </c:choose>
 
@@ -180,7 +185,19 @@
 
             $("#replyForm").submit();
         });
+//        $(".replyLink").click(function(){
+//            var count = $(this).attr("rel");
+//            var html = "<a href='#reply"+count+"'>#"+ count +"</a>";
+//            editor.setValue(html + editor.getValue());
+//            window.location.href="#reply";
+//        });
 
+        $(".replyLink").click(function () {
+            var count = $(this).attr("rel");
+            var html = "<a href='#reply" + count + "'>#" + count + "：</a>";
+            editor.setValue(html + editor.getValue());
+            window.location.href = "#reply";
+        });
 
 //        $("#replyForm").validate({
 //            errorElement : "span",
@@ -223,7 +240,7 @@
 //        });
 //
 //        hljs.initHighlightingOnLoad();
-        });
+    });
 </script>
 
 </body>
