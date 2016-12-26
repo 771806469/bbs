@@ -1,6 +1,8 @@
 package entity;
 
 
+import org.joda.time.DateTime;
+
 import java.sql.Timestamp;
 
 public class Topic {
@@ -17,6 +19,9 @@ public class Topic {
     private Integer userId;
     private Integer nodeId;
 
+    private User user;
+    private Node node;
+
     public Topic() {}
 
     public Topic(String title, String content, Integer userId, Integer nodeId) {
@@ -24,6 +29,30 @@ public class Topic {
         this.content = content;
         this.userId = userId;
         this.nodeId = nodeId;
+    }
+
+    public boolean isEditor(){
+        DateTime dateTime = new DateTime(getCreateTime());
+        if(dateTime.plusMinutes(5).isAfterNow() && (getReplyNum() == 0)) {
+            return true;
+        }
+        return false;
+    }
+
+    public Node getNode() {
+        return node;
+    }
+
+    public void setNode(Node node) {
+        this.node = node;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Integer getId() {

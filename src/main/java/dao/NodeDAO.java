@@ -30,9 +30,4 @@ public class NodeDAO {
         String sql = "select id,nodename,topicnum from t_node where id=?";
         return DBHelp.query(sql,new BeanHandler<>(Node.class),nodeId);
     }
-
-
-
-
-
 }

@@ -10,6 +10,9 @@
 <html>
 <head>
     <title>Title</title>
+    <link href="http://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -30,6 +33,7 @@
     </div>
     <!--box end-->
 </div>
+<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
 
 </body>
 </html>

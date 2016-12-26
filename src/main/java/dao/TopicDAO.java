@@ -34,4 +34,8 @@ public class TopicDAO {
         DBHelp.update(sql,topic.getTitle(),topic.getContent(),topic.getClickNum(),topic.getFavNum(),topic.getThanksNum(),topic.getReplyNum(),topic.getLastReplyTime(),topic.getNodeId(),topic.getUserId(),topic.getId());
 
     }
+
+//    public void findTopicDetailByTopicId(Integer topicId) {
+//        String sql = "select "
+//    }
 }

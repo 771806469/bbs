@@ -37,40 +37,40 @@
 <body>
 <%@include file="../include/navbar.jsp" %>
 <!--header-bar end-->
-<c:choose>
-    <c:when test="${not empty requestScope.topic}">
-        <div class="alert alert-error">${requestScope.error}</div>
-        <div class="container">
-        <div class="box">
-
-            <ul class="breadcrumb" style="background-color: #fff;margin-bottom: 0px;">
-                <li><a href="/home">首页</a> <span class="divider">/</span></li>
-                <li class="active">${requestScope.nodeName}</li>
-            </ul>
-            <div class="topic-head">
-                <img class="img-rounded avatar"
-                     src="http://ohwtqwe8j.bkt.clouddn.com/${requestScope.userAvatar}?imageView2/1/w/60/h/60"
-                     alt="">
-                <h3 class="title">${requestScope.topic.title}</h3>
-                <p class="topic-msg muted"><a href="">${requestScope.userName}</a> · <span id="topicTime"></span></p>
-            </div>
-            <div class="topic-body">
-                    ${requestScope.topic.content}
-            </div>
-            <div class="topic-toolbar">
-                <ul class="unstyled inline pull-left">
-                    <li><a href="">加入收藏</a></li>
-                    <li><a href="">感谢</a></li>
-                    <li><a href=""></a></li>
-                </ul>
-                <ul class="unstyled inline pull-right muted">
-                    <li>${requestScope.topic.clickNum}次点击</li>
-                    <li>${requestScope.topic.favNum}人收藏</li>
-                    <li>${requestScope.topic.thanksNum}人感谢</li>
-                </ul>
-            </div>
+<div class="container">
+    <div class="box">
+        <ul class="breadcrumb" style="background-color: #fff;margin-bottom: 0px;">
+            <li><a href="/home">首页</a> <span class="divider">/</span></li>
+            <li class="active">${requestScope.topic.node.nodeName}</li>
+        </ul>
+        <div class="topic-head">
+            <img class="img-rounded avatar"
+                 src="http://ohwtqwe8j.bkt.clouddn.com/${requestScope.topic.user.avatar}?imageView2/1/w/60/h/60"
+                 alt="">
+            <h3 class="title">${requestScope.topic.title}</h3>
+            <c:if test="${sessionScope.curr_user.id == topic.userId and topic.editor}">
+                <span><a href="/editortopic?topicId=${topic.id}">编辑</a></span></c:if>
+            <p class="topic-msg muted"><a href="">${requestScope.topic.user.username}</a> · <span id="topicTime"></span>
+            </p>
         </div>
-        <!--box end-->
+        <div class="topic-body">
+            ${requestScope.topic.content}
+        </div>
+        <div class="topic-toolbar">
+            <ul class="unstyled inline pull-left">
+                <li><a href="">加入收藏</a></li>
+                <li><a href="">感谢</a></li>
+                <li><a href=""></a></li>
+            </ul>
+            <ul class="unstyled inline pull-right muted">
+                <li>${requestScope.topic.clickNum}次点击</li>
+                <li>${requestScope.topic.favNum}人收藏</li>
+                <li>${requestScope.topic.thanksNum}人感谢</li>
+            </ul>
+        </div>
+    </div>
+    <!--box end-->
+    <c:if test="${not empty replyList}">
         <div class="box" style="margin-top:20px;">
             <div class="talk-item muted" style="font-size: 12px">
                     ${fn:length(replyList)}个回复 |最近回复时间：<span id="lastReplyTime"></span>
@@ -81,7 +81,8 @@
                         <tr>
                             <td width="50">
 
-                                <img class="avatar" src="${reply.user.avatar}?imageView2/1/w/50/h/50" alt="用户头像">
+                                <img class="avatar" src="${reply.user.avatar}?imageView2/1/w/50/h/50"
+                                     alt="用户头像">
                             </td>
                             <td width="auto">
                                 <a href="" style="font-size: 12px">${reply.user.username}</a> <span
@@ -92,54 +93,36 @@
                             <td width="70" align="right" style="font-size: 12px">
                                 <a href="javascript:;" rel="${vs.count}" class="replyLink" title="回复"><i
                                         class="fa fa-reply"></i></a>&nbsp;
-                                <span class="badge"><a name="reply${vs.count}"></a>${vs.count -1}楼</span>
+                                <span class="badge"><a name="reply${vs.count}"></a>${vs.count}楼</span>
                             </td>
                         </tr>
                     </table>
                 </div>
             </c:forEach>
         </div>
-        <c:choose>
-            <c:when test="${not empty sessionScope.curr_user}">
-                <div class="box" style="margin:20px 0px;">
-                    <div class="talk-item muted" style="font-size: 12px"><i class="fa fa-plus"></i> 添加一条新回复</div>
-                    <form id="replyForm" action="/reply" method="post" style="padding: 15px;margin-bottom:0px;">
-                        <input type="hidden" name="topicId" value="${topic.id}">
-                        <textarea name="content" id="editor"></textarea>
-                    </form>
-                    <div class="talk-item muted" style="text-align: right;font-size: 12px">
-                        <span class="pull-left">请尽量让自己的回复能够对别人有帮助回复</span>
-                        <button id="replyBtn" class="btn btn-primary">发布</button>
-                    </div>
-                </div>
-                </div>
-                <a name="reply"></a>
-            </c:when>
-            <c:otherwise>
-                <div class="box" style="margin:10px 0px;">
-                    <div class="talk-item"> 请<a href="/login?redirect=/topicdetail?topicId=${topic.id}#reply">登录</a>后再回复
-                    </div>
-                </div>
-            </c:otherwise>
-        </c:choose>
-
-    </c:when>
-    <c:otherwise>
-        <div class="container">
-            <div class="box">
-                <div class="box-header">
-                    <span class="title"><i class="fa fa-sign-in"></i> 系统提示</span>
-                </div>
-                <div class="box-padding">
-                    <h4 style="font-size: 18px">${requestScope.message}</h4>
-                </div>
-                <div class="form-actions">
-                    <a class="pull-right" href="/home">回到首页</a>
-                </div>
-            </div>
-            <!--box end-->
+    </c:if>
+    <c:choose>
+    <c:when test="${not empty sessionScope.curr_user}">
+    <div class="box" style="margin:20px 0px;">
+        <div class="talk-item muted" style="font-size: 12px"><i class="fa fa-plus"></i> 添加一条新回复</div>
+        <form id="replyForm" action="/reply" method="post" style="padding: 15px;margin-bottom:0px;">
+            <input type="hidden" name="topicId" value="${topic.id}">
+            <textarea name="content" id="editor"></textarea>
+        </form>
+        <div class="talk-item muted" style="text-align: right;font-size: 12px">
+            <span class="pull-left">请尽量让自己的回复能够对别人有帮助回复</span>
+            <button id="replyBtn" class="btn btn-primary">发布</button>
         </div>
-    </c:otherwise>
+    </div>
+</div>
+<a name="reply"></a>
+</c:when>
+<c:otherwise>
+    <div class="box" style="margin:10px 0px;">
+        <div class="talk-item"> 请<a href="/login?redirect=/topicdetail?topicId=${topic.id}#reply">登录</a>后再回复
+        </div>
+    </div>
+</c:otherwise>
 </c:choose>
 
 
@@ -169,6 +152,13 @@
                 images: ['smile.png', 'smiley.png', 'laughing.png', 'blush.png', 'heart_eyes.png', 'smirk.png', 'flushed.png', 'grin.png', 'wink.png', 'kissing_closed_eyes.png', 'stuck_out_tongue_winking_eye.png', 'stuck_out_tongue.png', 'sleeping.png', 'worried.png', 'expressionless.png', 'sweat_smile.png', 'cold_sweat.png', 'joy.png', 'sob.png', 'angry.png', 'mask.png', 'scream.png', 'sunglasses.png', 'heart.png', 'broken_heart.png', 'star.png', 'anger.png', 'exclamation.png', 'question.png', 'zzz.png', 'thumbsup.png', 'thumbsdown.png', 'ok_hand.png', 'punch.png', 'v.png', 'clap.png', 'muscle.png', 'pray.png', 'skull.png', 'trollface.png'],
             }
         });
+        $(".replyLink").click(function () {
+            var count = $(this).attr("rel");
+            console.log(count);
+            var html = "<a href='#reply" + count + "'>回复" + count + "楼：</a>";
+            editor.setValue(html + editor.getValue());
+            window.location.href = "#reply";
+        });
         </c:when>
         </c:choose>
 
@@ -185,19 +175,7 @@
 
             $("#replyForm").submit();
         });
-//        $(".replyLink").click(function(){
-//            var count = $(this).attr("rel");
-//            var html = "<a href='#reply"+count+"'>#"+ count +"</a>";
-//            editor.setValue(html + editor.getValue());
-//            window.location.href="#reply";
-//        });
 
-        $(".replyLink").click(function () {
-            var count = $(this).attr("rel");
-            var html = "<a href='#reply" + count + "'>#" + count + "：</a>";
-            editor.setValue(html + editor.getValue());
-            window.location.href = "#reply";
-        });
 
 //        $("#replyForm").validate({
 //            errorElement : "span",
