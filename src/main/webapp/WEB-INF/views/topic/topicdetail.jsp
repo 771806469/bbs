@@ -58,13 +58,20 @@
         </div>
         <div class="topic-toolbar">
             <ul class="unstyled inline pull-left">
-                <li><a href="">加入收藏</a></li>
+                    <c:choose>
+                        <c:when test="${not empty fav}">
+                            <li><a href="javascript:;" id="fav">取消收藏</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a href="javascript:;" id="fav">加入收藏</a></li>
+                        </c:otherwise>
+                    </c:choose>
                 <li><a href="">感谢</a></li>
                 <li><a href=""></a></li>
             </ul>
             <ul class="unstyled inline pull-right muted">
                 <li>${requestScope.topic.clickNum}次点击</li>
-                <li>${requestScope.topic.favNum}人收藏</li>
+                <li id="favNum">${requestScope.topic.favNum}</li>人收藏
                 <li>${requestScope.topic.thanksNum}人感谢</li>
             </ul>
         </div>
@@ -141,26 +148,48 @@
 <script>
     $(function () {
 
-        <c:choose>
-        <c:when test="${not empty sessionScope.curr_user}">
-        var editor = new Simditor({
-            textarea: $('#editor'),
-            toolbar: ['emoji'],
-            //optional options
-            emoji: {
-                imagePath: "/static/img/emoji/",
-                images: ['smile.png', 'smiley.png', 'laughing.png', 'blush.png', 'heart_eyes.png', 'smirk.png', 'flushed.png', 'grin.png', 'wink.png', 'kissing_closed_eyes.png', 'stuck_out_tongue_winking_eye.png', 'stuck_out_tongue.png', 'sleeping.png', 'worried.png', 'expressionless.png', 'sweat_smile.png', 'cold_sweat.png', 'joy.png', 'sob.png', 'angry.png', 'mask.png', 'scream.png', 'sunglasses.png', 'heart.png', 'broken_heart.png', 'star.png', 'anger.png', 'exclamation.png', 'question.png', 'zzz.png', 'thumbsup.png', 'thumbsdown.png', 'ok_hand.png', 'punch.png', 'v.png', 'clap.png', 'muscle.png', 'pray.png', 'skull.png', 'trollface.png'],
-            }
+
+        <c:if test="${not empty sessionScope.curr_user}">
+            var editor = new Simditor({
+                textarea: $('#editor'),
+                toolbar: ['emoji'],
+                //optional options
+                emoji: {
+                    imagePath: "/static/img/emoji/",
+                    images: ['smile.png', 'smiley.png', 'laughing.png', 'blush.png', 'heart_eyes.png', 'smirk.png', 'flushed.png', 'grin.png', 'wink.png', 'kissing_closed_eyes.png', 'stuck_out_tongue_winking_eye.png', 'stuck_out_tongue.png', 'sleeping.png', 'worried.png', 'expressionless.png', 'sweat_smile.png', 'cold_sweat.png', 'joy.png', 'sob.png', 'angry.png', 'mask.png', 'scream.png', 'sunglasses.png', 'heart.png', 'broken_heart.png', 'star.png', 'anger.png', 'exclamation.png', 'question.png', 'zzz.png', 'thumbsup.png', 'thumbsdown.png', 'ok_hand.png', 'punch.png', 'v.png', 'clap.png', 'muscle.png', 'pray.png', 'skull.png', 'trollface.png'],
+                }
+            });
+            $(".replyLink").click(function () {
+                var count = $(this).attr("rel");
+                console.log(count);
+                var html = "<a href='#reply" + count + "'>回复" + count + "楼：</a>";
+                editor.setValue(html + editor.getValue());
+                window.location.href = "#reply";
+            });
+
+            $("#fav").click(function () {
+                var favText = $(this).text();
+                $.post("/fav",{"fav" : favText,"topicId" : ${topic.id}}).done(function (json) {
+                    if(json.state == 'success') {
+                        if(favText == '加入收藏') {
+                            $("#fav").text("取消收藏");
+                        } else {
+                            $("#fav").text("加入收藏");
+                        }
+                        $("#favNum").text(json.data)
+                    } else if(json.state == 'error'){
+                        alert(json.message);
+                    }
+                })
+            });
+
+
+        </c:if>
+
+        $("#fav").click(function () {
+            alert("请登录后再收藏!");
         });
-        $(".replyLink").click(function () {
-            var count = $(this).attr("rel");
-            console.log(count);
-            var html = "<a href='#reply" + count + "'>回复" + count + "楼：</a>";
-            editor.setValue(html + editor.getValue());
-            window.location.href = "#reply";
-        });
-        </c:when>
-        </c:choose>
+
 
         var topicTime = moment("${topic.createTime}");
         var lastReplyTime = moment("${topic.lastReplyTime}");
