@@ -12,6 +12,9 @@ $(function(){
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
+    $("#password").keydown(function() {
+        $("#loginForm").submit();
+    });
 
     $("#loginBtn").click(function () {
         $("#loginForm").submit();

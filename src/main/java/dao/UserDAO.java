@@ -19,7 +19,7 @@ public class UserDAO {
 
     public User findByEmail(String email) {
         String sql = "select id,username,password,email,createTime,phone,state,avatar from user where email=?";
-        return DBHelp.query(sql,new BeanHandler<User>(User.class),email);
+        return DBHelp.query(sql,new BeanHandler<>(User.class),email);
     }
 
     public void save(User user) {

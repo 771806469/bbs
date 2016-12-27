@@ -1,5 +1,6 @@
 package service;
 
+import com.google.common.collect.Maps;
 import dao.NodeDAO;
 import dao.TopicDAO;
 import dao.UserDAO;
@@ -10,8 +11,12 @@ import exception.ServiceException;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.Page;
+import util.StringUtils;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/12/21 0021.
@@ -99,6 +104,26 @@ public class TopicService {
             throw new ServiceException("此帖子不存在，或已不可修改！");
         }
 
+    }
+
+    public Page<Topic> findTopicByPage(String nodeId, Integer pageNum) {
+        HashMap<String,Object> map = Maps.newHashMap();
+        int count = 0;
+        if(StringUtils.isEmpty(nodeId)) {
+            count = topicDAO.count();
+        } else {
+            logger.debug("nodeId值为{}",nodeId);
+            count = topicDAO.count(Integer.valueOf(nodeId));
+        }
+        logger.debug("分页所需总条数为：{}",count);
+        Page<Topic> topicPage = new Page<>(count,pageNum);
+        map.put("start",topicPage.getStart());
+        map.put("nodeId",nodeId);
+        map.put("pageSize", topicPage.getPageSize());
+
+        List<Topic> topicList = topicDAO.findTopicPage(map);
+        topicPage.setPageList(topicList);
+        return topicPage;
     }
 
 }

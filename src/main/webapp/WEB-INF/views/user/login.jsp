@@ -50,7 +50,7 @@
                     <div class="control-group">
                         <label class="control-label">密码</label>
                         <div class="controls">
-                            <input name="password" type="password">
+                            <input name="password" id="password" type="password">
                         </div>
                     </div>
                     <div class="control-group">
