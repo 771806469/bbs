@@ -67,6 +67,7 @@
 <script src="/static/js/jquery.validate.min.js"></script>
 <script src="/static/js/simditor-emoji.js"></script>
 <script src="/static/js/highlight.pack.js"></script>
+<script src="/static/js/self/notify.js"></script>
 <%--<script src="/static/js/self/topic/newtopic.js"></script>--%>
 
 <script>
