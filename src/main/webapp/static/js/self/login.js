@@ -1,6 +1,6 @@
 $(function(){
 
-    function getParameterByName(name, url) {
+    function getParameterByName(name,url) {
         if (!url) {
             url = window.location.href;
         }
@@ -53,6 +53,7 @@ $(function(){
                 },
                 success : function (data) {
                     if(data.state == "success") {
+
                             var url = getParameterByName("redirect");
                             if(url) {
                                 var hash = location.hash;

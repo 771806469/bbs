@@ -117,8 +117,6 @@
                         if(json.state = 'success') {
                             alert("修改成功，等待人工审核通过后方可在主页显示");
                             window.location.href = "/topicdetail?topicId=" + json.data;
-                            alert(json.data);
-                            alert(json.state);
                         } else {
                             alert(json.message);
                         }
