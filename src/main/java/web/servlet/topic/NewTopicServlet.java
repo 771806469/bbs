@@ -26,14 +26,24 @@ public class NewTopicServlet extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Node> nodeList = nodeService.findAllNode();
+//        List<Node> nodeList = nodeService.findAllNode();
+//        Auth auth = Auth.create(Config.get("ak"),Config.get("sk"));
+//        StringMap stringMap = new StringMap();
+//        stringMap.put("returnBody","{ \"success\": true,\"file_path\": \"" + Config.get("qiniu.domain") + "${key}\"}");
+//        String token = auth.uploadToken(Config.get("bucket"),null,3600,stringMap);
+//
+//        req.setAttribute("token",token);
+//        req.setAttribute("nodeList",nodeList);
+//        forward("topic/newtopic",req,resp);
         Auth auth = Auth.create(Config.get("ak"),Config.get("sk"));
         StringMap stringMap = new StringMap();
-        stringMap.put("returnBody","{ \"success\": true,\"file_path\": \"" + Config.get("qiniu.domain") + "${key}\"}");
+        stringMap.put("returnBody","{ \"success\": true,\"file_path\": \""+Config.get("qiniu.domain")+"${key}\"}");
         String token = auth.uploadToken(Config.get("bucket"),null,3600,stringMap);
 
+        //获取nodelist到jsp页面
+        List<Node> nodelist = nodeService.findAllNode();
+        req.setAttribute("nodeList",nodelist);
         req.setAttribute("token",token);
-        req.setAttribute("nodeList",nodeList);
         forward("topic/newtopic",req,resp);
     }
 

@@ -1,6 +1,6 @@
-$(function(){
+$(function () {
 
-    function getParameterByName(name,url) {
+    function getParameterByName(name, url) {
         if (!url) {
             url = window.location.href;
         }
@@ -12,8 +12,14 @@ $(function(){
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
-    $("#password").keydown(function() {
-        $("#loginForm").submit();
+    $("#regBtn").click(function () {
+        window.location.href = "/reg";
+    });
+
+    $("#password").keydown(function () {
+        if(event.keyCode == 13) {
+            $("#loginForm").submit();
+        }
     });
 
     $("#loginBtn").click(function () {
@@ -21,58 +27,57 @@ $(function(){
     });
 
     $("form").validate({
-        errorElement : "span",
-        errorClass : "text-error",
-        rules : {
-            username : {
-                required : true,
-                minlength : 3
+        errorElement: "span",
+        errorClass: "text-error",
+        rules: {
+            username: {
+                required: true,
+                minlength: 3
             },
-            password : {
-                required : true,
-                rangelength: [6,18]
+            password: {
+                required: true,
+                rangelength: [6, 18]
             }
         },
-        messages : {
-            username : {
-                required : "请输入账号",
-                minlength : "账号最小长度为3"
+        messages: {
+            username: {
+                required: "请输入账号",
+                minlength: "账号最小长度为3"
             },
-            password : {
-                required : "请输入密码",
-                rangelength : "密码长度为6~18位"
+            password: {
+                required: "请输入密码",
+                rangelength: "密码长度为6~18位"
             }
         },
-        submitHandler : function(form){
+        submitHandler: function (form) {
             $.ajax({
-                url : "/login",
-                type : "post",
-                data : $(form).serialize(),
-                beforeSend : function () {
-                    $("#loginBtn").html("登录中<img src='/static/img/loding.gif'>").attr("disabled","disabled");
+                url: "/login",
+                type: "post",
+                data: $(form).serialize(),
+                beforeSend: function () {
+                    $("#loginBtn").html("登录中<img src='/static/img/loding.gif'>").attr("disabled", "disabled");
                 },
-                success : function (data) {
-                    if(data.state == "success") {
-
-                            var url = getParameterByName("redirect");
-                            if(url) {
-                                var hash = location.hash;
-                                if(hash){
-                                    window.location.href = url + hash;
-                                } else {
-                                    window.location.href = url;
-                                }
+                success: function (data) {
+                    if (data.state == "success") {
+                        var url = getParameterByName("redirect");
+                        if (url) {
+                            var hash = location.hash;
+                            if (hash) {
+                                window.location.href = url + hash;
                             } else {
-                                window.location.href = "/home";
+                                window.location.href = url;
                             }
+                        } else {
+                            window.location.href = "/home";
+                        }
                     } else {
                         alert(data.message);
                     }
                 },
-                error : function () {
+                error: function () {
                     alert("服务器访问错误");
                 },
-                complete : function () {
+                complete: function () {
                     $("#loginBtn").html("登录").removeAttr("disabled");
                 }
 

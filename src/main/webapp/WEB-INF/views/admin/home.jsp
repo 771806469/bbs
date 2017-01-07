@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="http://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="http://cdn.bootcss.com/bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <%@include file="../include/adminNavbar.jsp"%>
@@ -20,78 +20,39 @@
             <th>日期</th>
             <th>新主题数</th>
             <th>新回复数</th>
-            <th>操作</th>
         </tr>
         </thead>
         <tbody>
+        <c:forEach items = "${page.pageList}" var="item">
         <tr>
-            <td>
-                2016-12-28
-            </td>
-            <td>123</td>
-            <td>2546</td>
+            <td>${item.time}</td>
+            <td>${item.topicnum}</td>
+            <td>${item.replynum}</td>
 
-            <td>
-                <a href="">详情</a>
-            </td>
         </tr>
-        <tr>
-            <td>
-                2016-12-27
-            </td>
-            <td>123</td>
-            <td>2546</td>
-
-            <td>
-                <a href="">详情</a>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2016-12-26
-            </td>
-            <td>123</td>
-            <td>2546</td>
-
-            <td>
-                <a href="">详情</a>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2016-12-25
-            </td>
-            <td>123</td>
-            <td>2546</td>
-
-            <td>
-                <a href="">详情</a>
-            </td>
-        </tr><tr>
-            <td>
-                2016-12-24
-            </td>
-            <td>123</td>
-            <td>2546</td>
-
-            <td>
-                <a href="">详情</a>
-            </td>
-        </tr>
+        </c:forEach>
         </tbody>
     </table>
     <div class="pagination pull-right">
-        <ul>
-            <li><a href="#">Prev</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">Next</a></li>
-        </ul>
+        <ul id="pagination" style="margin-bottom:20px;"></ul>
     </div>
 </div>
 <!--container end-->
+<script src="/static/js/jquery-1.11.1.js"></script>
+<script src="/static/js/jquery.twbsPagination.min.js"></script>
+<script src="/static/js/sweetalert.min.js"></script>
+<script>
+    $(function(){
+        $("#pagination").twbsPagination({
+            totalPages:${page.pageCount},
+            visiblePages:5,
+            first:'首页',
+            last:'末页',
+            prev:'上一页',
+            next:'下一页',
+            href: '?p={{number}}'
+        });
+    });
+</script>
 </body>
 </html>

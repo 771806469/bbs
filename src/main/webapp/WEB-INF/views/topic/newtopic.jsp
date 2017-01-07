@@ -11,8 +11,8 @@
 <head>
     <meta charset="UTF-8">
     <title>发布新主题</title>
-    <link href="http://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="http://cdn.bootcss.com/bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/js/editer/styles/simditor.css">
     <link rel="stylesheet" href="/static/css/style.css">
@@ -20,8 +20,8 @@
     <link rel="stylesheet" href="/static/css/highlight/agate.css">
     <style>
 
-        .content img {
-            width: 200px;
+        #sendForm img {
+            width: 120px;
         }
 
     </style>
@@ -59,7 +59,7 @@
     </div>
     <!--container end-->
 </div>
-<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+<script src="/static/js/jquery-1.11.1.js"></script>
 <script src="/static/js/editer/scripts/module.min.js"></script>
 <script src="/static/js/editer/scripts/hotkeys.min.js"></script>
 <script src="/static/js/editer/scripts/uploader.min.js"></script>
@@ -82,8 +82,8 @@
                 imagePath: '/static/img/emoji/',
                 images:['smile.png' ,'smiley.png' ,'laughing.png' ,'blush.png', 'heart_eyes.png' ,'smirk.png','flushed.png' ,'grin.png' ,'wink.png' ,'kissing_closed_eyes.png' ,'stuck_out_tongue_winking_eye.png' ,'stuck_out_tongue.png' ,'sleeping.png' ,'worried.png' ,'expressionless.png' ,'sweat_smile.png' ,'cold_sweat.png' ,'joy.png' ,'sob.png' ,'angry.png' ,'mask.png' ,'scream.png' ,'sunglasses.png' ,'heart.png' ,'broken_heart.png' ,'star.png' ,'anger.png' ,'exclamation.png' ,'question.png' ,'zzz.png' ,'thumbsup.png' ,'thumbsdown.png' ,'ok_hand.png' ,'punch.png' ,'v.png' ,'clap.png', 'muscle.png' ,'pray.png' ,'skull.png' ,'trollface.png'],
             },
-            upload: {
-                url:"http://up-z1.qiniu.com/",
+            upload : {
+                url :'http://up-z1.qiniu.com/',
                 params : {"token" :"${token}"},
                 fileKey: "file"
             }

@@ -5,12 +5,13 @@ import entity.User;
 import org.apache.commons.dbutils.BasicRowProcessor;
 import org.apache.commons.dbutils.handlers.AbstractListHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.DBHelp;
-import util.Page;
 import util.StringUtils;
+import vo.TopicReplyCount;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -86,5 +87,26 @@ public class TopicDAO {
             }
         },array.toArray());
 
+    }
+
+    public void delById(Integer id) {
+        String sql = "delete from t_topic where id = ?";
+        logger.debug("删除帖子的sql语句为：{},帖子id为：{}",sql,id);
+        DBHelp.update(sql,id);
+    }
+
+    public int countTopicByDay() {
+        String sql = "select count(*) from (select count(*) from t_topic group by DATE_FORMAT(createtime,'%y-%m-%d')) AS topicCount";
+        return DBHelp.query(sql,new ScalarHandler<Long>()).intValue();
+    }
+
+    public List<TopicReplyCount> getTopicAndReplyNumList(int start, int pageSize) {
+        String sql = "SELECT COUNT(*) topicnum,DATE_FORMAT(createtime,'%y-%m-%d') 'time',\n" +
+                "(SELECT COUNT(*) FROM t_reply WHERE DATE_FORMAT(createtime,'%y-%m-%d') \n" +
+                "= DATE_FORMAT(t_topic.createtime,'%y-%m-%d')) 'replynum'\n" +
+                "FROM t_topic GROUP BY (DATE_FORMAT(createtime,'%y-%m-%d')) \n" +
+                "ORDER BY (DATE_FORMAT(createtime,'%y-%m-%d')) DESC limit ?,?";
+
+        return DBHelp.query(sql,new BeanListHandler<TopicReplyCount>(TopicReplyCount.class),start,pageSize);
     }
 }

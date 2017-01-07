@@ -20,7 +20,6 @@ public class ValidateUsernameServlet extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = StringUtils.isoToUtf8(req.getParameter("username"));
-        logger.debug(username);
         UserService userService = new UserService();
         Boolean result = userService.findUsername(username);
         if(result) {

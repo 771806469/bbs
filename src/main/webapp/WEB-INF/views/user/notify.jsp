@@ -12,8 +12,8 @@
 <head>
     <meta charset="UTF-8">
     <title>凯盛IT-通知中心</title>
-    <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="//cdn.bootcss.com/bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
@@ -29,8 +29,7 @@
             <thead>
             <tr>
                 <th width="30">
-                    <c:if test="${not empty notifyList}"><input type="checkbox" id="ckFather"></th>
-                </c:if>
+                    <c:if test="${not empty notifyList}"><input type="checkbox" id="ckFather"></c:if></th>
                 <th width="200">发布日期</th>
                 <th>内容</th>
             </tr>

@@ -13,8 +13,8 @@
 <head>
     <meta charset="UTF-8">
     <title>凯盛IT-${topic.title}</title>
-    <link href="http://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="http://cdn.bootcss.com/bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/js/editer/styles/simditor.css">
     <link rel="stylesheet" href="/static/css/style.css">
@@ -26,7 +26,7 @@
         }
 
         .topic-body img {
-            width: 200px;
+            width: 120px;
         }
 
         .simditor .simditor-body {
@@ -58,20 +58,21 @@
         </div>
         <div class="topic-toolbar">
             <ul class="unstyled inline pull-left">
-                    <c:choose>
-                        <c:when test="${not empty fav}">
-                            <li><a href="javascript:;" id="fav">取消收藏</a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li><a href="javascript:;" id="fav">加入收藏</a></li>
-                        </c:otherwise>
-                    </c:choose>
+                <c:choose>
+                    <c:when test="${not empty fav}">
+                        <li><a href="javascript:;" id="fav">取消收藏</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="javascript:;" id="fav">加入收藏</a></li>
+                    </c:otherwise>
+                </c:choose>
                 <li><a href="">感谢</a></li>
                 <li><a href=""></a></li>
             </ul>
             <ul class="unstyled inline pull-right muted">
                 <li>${requestScope.topic.clickNum}次点击</li>
-                <li id="favNum">${requestScope.topic.favNum}</li>人收藏
+                <li id="favNum">${requestScope.topic.favNum}</li>
+                人收藏
                 <li>${requestScope.topic.thanksNum}人感谢</li>
             </ul>
         </div>
@@ -89,7 +90,7 @@
                             <td width="50">
 
                                 <img class="avatar" src="${reply.user.avatar}?imageView2/1/w/50/h/50"
-                                     alt="用户头像">
+                                     alt="avatar">
                             </td>
                             <td width="auto">
                                 <a href="" style="font-size: 12px">${reply.user.username}</a> <span
@@ -134,7 +135,7 @@
 
 
 <!--container end-->
-<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+<script src="/static/js/jquery-1.11.1.js"></script>
 <script src="/static/js/editer/scripts/module.min.js"></script>
 <script src="/static/js/editer/scripts/hotkeys.min.js"></script>
 <script src="/static/js/editer/scripts/uploader.min.js"></script>
@@ -142,59 +143,63 @@
 <script src="/static/js/jquery.validate.min.js"></script>
 <script src="/static/js/simditor-emoji.js"></script>
 <script src="/static/js/highlight.pack.js"></script>
-<script src="//cdn.bootcss.com/moment.js/2.10.6/moment.min.js"></script>
-<script src="//cdn.bootcss.com/moment.js/2.10.6/locale/zh-cn.js"></script>
+<script src="/static/js/moment.js"></script>
+<script src="/static/js/zh-cn.js"></script>
 <script></script>
 <script>
     $(function () {
 
 
         <c:if test="${not empty sessionScope.curr_user}">
-            var editor = new Simditor({
-                textarea: $('#editor'),
-                toolbar: ['emoji'],
-                //optional options
-                emoji: {
-                    imagePath: "/static/img/emoji/",
-                    images: ['smile.png', 'smiley.png', 'laughing.png', 'blush.png', 'heart_eyes.png', 'smirk.png', 'flushed.png', 'grin.png', 'wink.png', 'kissing_closed_eyes.png', 'stuck_out_tongue_winking_eye.png', 'stuck_out_tongue.png', 'sleeping.png', 'worried.png', 'expressionless.png', 'sweat_smile.png', 'cold_sweat.png', 'joy.png', 'sob.png', 'angry.png', 'mask.png', 'scream.png', 'sunglasses.png', 'heart.png', 'broken_heart.png', 'star.png', 'anger.png', 'exclamation.png', 'question.png', 'zzz.png', 'thumbsup.png', 'thumbsdown.png', 'ok_hand.png', 'punch.png', 'v.png', 'clap.png', 'muscle.png', 'pray.png', 'skull.png', 'trollface.png'],
-                }
-            });
-            $(".replyLink").click(function () {
-                var count = $(this).attr("rel");
-                console.log(count);
-                var html = "<a href='#reply" + count + "'>回复" + count + "楼：</a>";
-                editor.setValue(html + editor.getValue());
-                window.location.href = "#reply";
-            });
-
-            $("#fav").click(function () {
-                var favText = $(this).text();
-                $.post("/fav",{"fav" : favText,"topicId" : ${topic.id}}).done(function (json) {
-                    if(json.state == 'success') {
-                        if(favText == '加入收藏') {
-                            $("#fav").text("取消收藏");
-                        } else {
-                            $("#fav").text("加入收藏");
-                        }
-                        $("#favNum").text(json.data)
-                    } else if(json.state == 'error'){
-                        alert(json.message);
-                    }
-                })
-            });
-
-
-        </c:if>
-
-        $("#fav").click(function () {
-            alert("请登录后再收藏!");
+        var editor = new Simditor({
+            textarea: $('#editor'),
+            toolbar: ['emoji'],
+            //optional options
+            emoji: {
+                imagePath: "/static/img/emoji/",
+                images: ['smile.png', 'smiley.png', 'laughing.png', 'blush.png', 'heart_eyes.png', 'smirk.png', 'flushed.png', 'grin.png', 'wink.png', 'kissing_closed_eyes.png', 'stuck_out_tongue_winking_eye.png', 'stuck_out_tongue.png', 'sleeping.png', 'worried.png', 'expressionless.png', 'sweat_smile.png', 'cold_sweat.png', 'joy.png', 'sob.png', 'angry.png', 'mask.png', 'scream.png', 'sunglasses.png', 'heart.png', 'broken_heart.png', 'star.png', 'anger.png', 'exclamation.png', 'question.png', 'zzz.png', 'thumbsup.png', 'thumbsdown.png', 'ok_hand.png', 'punch.png', 'v.png', 'clap.png', 'muscle.png', 'pray.png', 'skull.png', 'trollface.png'],
+            }
         });
+        $(".replyLink").click(function () {
+            var count = $(this).attr("rel");
+            console.log(count);
+            var html = "<a href='#reply" + count + "'>回复" + count + "楼：</a>";
+            editor.setValue(html + editor.getValue());
+            window.location.href = "#reply";
+        });
+        </c:if>
+        <c:choose>
+        <c:when test="${not empty sessionScope.curr_user}">
+        $("#fav").click(function () {
+            var favText = $(this).text();
+            $.post("/fav", {"fav": favText, "topicId": ${topic.id}}).done(function (json) {
+                if (json.state == 'success') {
+                    if (favText == '加入收藏') {
+                        alert("已加入收藏");
+                        $("#fav").text("取消收藏");
+                    } else {
+                        alert("已取消收藏");
+                        $("#fav").text("加入收藏");
+                    }
+                    $("#favNum").text(json.data)
+                } else if (json.state == 'error') {
+                    alert(json.message);
+                }
+            })
+        });
+        </c:when>
+        <c:otherwise>
+        $("#fav").click(function () {
+            alert("请登录后再收藏");
+        });
+        </c:otherwise>
+        </c:choose>
 
 
         var topicTime = moment("${topic.createTime}");
         var lastReplyTime = moment("${topic.lastReplyTime}");
         $("#topicTime").text(topicTime.fromNow());
-        $("#lastReplyTime").text(lastReplyTime.format("yyyy年mm月dd日 hh:mm:ss"));
+        $("#lastReplyTime").text(lastReplyTime.format("YYYY年mm月dd日 hh:mm:ss"));
         $(".reply").text(function () {
             var time = moment($(this).text());
             return time.fromNow();

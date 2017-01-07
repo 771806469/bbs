@@ -4,6 +4,8 @@ import entity.Reply;
 import entity.User;
 import org.apache.commons.dbutils.BasicRowProcessor;
 import org.apache.commons.dbutils.handlers.AbstractListHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import util.Config;
 import util.DBHelp;
 
@@ -15,6 +17,8 @@ import java.util.List;
  * Created by Administrator on 2016/12/23 0023.
  */
 public class ReplyDAO {
+
+    private static Logger logger = LoggerFactory.getLogger(ReplyDAO.class);
 
     public void addReply(Reply reply) {
         String sql = "insert into t_reply(content,topicid,userid) values(?,?,?)";
@@ -41,4 +45,9 @@ public class ReplyDAO {
         }, topicId);
     }
 
+    public void delListByTopicId(Integer id) {
+        String sql = "delete from t_reply where topicid = ?";
+        logger.debug("执行的SQL语句为：{},帖子ID为：{}",sql,id);
+        DBHelp.update(sql,id);
+    }
 }

@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
-    <link href="http://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="http://cdn.bootcss.com/bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
@@ -26,8 +26,8 @@
             <div class="talk-item">
                 <table class="talk-table">
                     <tr>
-                        <td width="50">
-                            <img class="avatar" src="http://ohwtqwe8j.bkt.clouddn.com/${topic.user.avatar}" width="50"
+                        <td width="50" height="50">
+                            <img class="avatar" src="http://ohwtqwe8j.bkt.clouddn.com/${topic.user.avatar}?imageView2/1/w/40/h/40" width="50"
                                  height="50" alt="">
                         </td>
                         <td width="80">
@@ -47,7 +47,6 @@
         <div class="pagination pagination-mini pagination-centered">
             <ul id="pagination" style="margin-bottom:20px;"></ul>
         </div>
-        >
     </div>
     <!--box end-->
 </div>

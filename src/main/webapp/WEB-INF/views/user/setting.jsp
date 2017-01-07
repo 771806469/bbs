@@ -11,8 +11,8 @@
 <head>
     <meta charset="UTF-8">
     <title>个人资料修改</title>
-    <link href="http://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="http://cdn.bootcss.com/bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/js/webuploader/webuploader.css">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
@@ -29,13 +29,13 @@
             <div class="control-group">
                 <label class="control-label">账号</label>
                 <div class="controls">
-                    <input type="text" readonly>
+                    <input type="text" readonly value="${sessionScope.curr_user.username}">
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label">电子邮件</label>
                 <div class="controls">
-                    <input name="email" type="text">
+                    <input name="email" type="text" placeholder="${sessionScope.curr_user.email}">
                 </div>
             </div>
             <div class="form-actions">
@@ -114,10 +114,12 @@
 <script src="/static/js/jquery.validate.min.js"></script>
 <script src="/static/js/webuploader/webuploader.min.js"></script>
 <script src="/static/js/self/setting.js"></script>
+<script src="/static/js/self/notify.js"></script>
 <script>
 
     $(function(){
         //头像上传
+        var token = "${token}";
         var uploader = WebUploader.create({
             swf : "/static/js/webuploader/Uploader.swf",
             server: "http://up-z1.qiniu.com/",

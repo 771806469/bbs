@@ -7,6 +7,7 @@ import util.AbstractFilter;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 
@@ -14,12 +15,17 @@ import java.util.*;
 public class LoginFilter extends AbstractFilter {
 
     private List<String> urlList = new ArrayList<>();
+    private List<String> adminList = new ArrayList<>();
     private Logger logger = LoggerFactory.getLogger(LoginFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         String validateUrl = filterConfig.getInitParameter("validateUrl");
+        String validateAdmin = filterConfig.getInitParameter("validateAdmin");
         urlList = Arrays.asList(validateUrl.split(","));
+        adminList = Arrays.asList(validateAdmin.split(","));
+        logger.debug("adminList -> {}", adminList.toArray());
+
     }
 
     @Override
@@ -29,8 +35,20 @@ public class LoginFilter extends AbstractFilter {
 
         //获取用户要访问的url
         String requestUrl = req.getRequestURI();
-
-        if (urlList != null && urlList.contains(requestUrl)) {
+        if(requestUrl.startsWith("/admin")) {
+            logger.debug("以/admin开头，值为：{}",requestUrl);
+            if(adminList != null && adminList.contains(requestUrl)) {
+                if(req.getSession().getAttribute("curr_admin") == null) {
+                    logger.debug("curr_admin为空");
+                    resp.sendRedirect("/admin/login?redirect=" + requestUrl);
+                } else {
+                    logger.debug("curr_admin不为空");
+                    filterChain.doFilter(req,resp);
+                }
+            } else {
+                filterChain.doFilter(req,resp);
+            }
+        } else if(urlList != null && urlList.contains(requestUrl)) {
             if (req.getSession().getAttribute("curr_user") != null) {
                 filterChain.doFilter(req, resp);
             } else {
@@ -57,7 +75,7 @@ public class LoginFilter extends AbstractFilter {
                 resp.sendRedirect("/login?redirect=" + requestUrl);
             }
         } else {
-            filterChain.doFilter(req, resp);
+            filterChain.doFilter(req,resp);
         }
 
     }

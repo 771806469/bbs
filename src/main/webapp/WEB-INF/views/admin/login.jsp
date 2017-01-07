@@ -3,19 +3,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>用户登录</title>
-    <link href="http://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="http://cdn.bootcss.com/bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <title>管理员登录</title>
+    <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/style1.css" rel="stylesheet" >
 </head>
 <body>
-<div class="header-bar">
-    <div class="container">
-        <a href="#" class="brand">
-            <i class="fa fa-reddit-alien"></i>
-        </a>
-    </div>
-</div>
+<%@include file="../include/adminNavbar.jsp"%>
 <!--header-bar end-->
 <div class="container">
     <div class="box">
@@ -38,7 +32,7 @@
             </div>
 
             <div class="form-actions">
-                <button id="loginBtn" class="btn btn-primary">登录</button>
+                <button id="loginBtn" type="button" class="btn btn-primary">登录</button>
             </div>
 
         </form>
@@ -51,7 +45,7 @@
 <!--container end-->
 <script src="/static/js/jquery-1.11.1.js"></script>
 <script src="/static/js/jquery.validate.min.js"></script>
-<script src="/static/js/admin/login.js"></script>
+<script src="/static/js/self/adminlogin.js"></script>
 
 </body>
 </html>

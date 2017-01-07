@@ -303,6 +303,20 @@ public class UserService {
             userDAO.update(user);
         }
     }
+
+    public void updateState(Integer userId, Integer userState) {
+        User user = userDAO.findById(userId);
+        if(user != null) {
+            if (userState == 1) {
+                user.setState(User.USERSTATE_DISABLED);
+            }else if(userState == 2){
+                user.setState(User.USERSTATE_ACTIVE);
+            }
+            userDAO.update(user);
+        } else {
+            throw new ServiceException("该用户不存在！");
+        }
+    }
 }
 
 

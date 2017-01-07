@@ -2,6 +2,7 @@ package service;
 
 import com.google.common.collect.Maps;
 import dao.NodeDAO;
+import dao.ReplyDAO;
 import dao.TopicDAO;
 import dao.UserDAO;
 import entity.Node;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.Page;
 import util.StringUtils;
+import vo.TopicReplyCount;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -26,6 +28,7 @@ public class TopicService {
     private static UserDAO userDAO = new UserDAO();
     private static TopicDAO topicDAO = new TopicDAO();
     private static NodeDAO nodeDAO = new NodeDAO();
+    private static ReplyDAO replyDAO = new ReplyDAO();
     private static Logger logger = LoggerFactory.getLogger(TopicService.class);
 
     public Integer saveTopic(User user, String title, String content, Integer nodeId) throws ServiceException {
@@ -61,7 +64,7 @@ public class TopicService {
         } else {
             //根据帖子Id找到对应的帖子node,user,并封装到topic中
             Node node = nodeDAO.findNodeById(Integer.valueOf(topic.getNodeId()));
-            User user = userDAO.findByTopicId(Integer.valueOf(topic.getUserId()));
+            User user = userDAO.findById(Integer.valueOf(topic.getUserId()));
             topic.setNode(node);
             topic.setUser(user);
             return topic;
@@ -126,4 +129,45 @@ public class TopicService {
         return topicPage;
     }
 
+    public void delTopicById(Integer id) {
+
+        Topic topic = topicDAO.findById(id);
+        if(topic == null) {
+            throw new ServiceException("该贴不存在或已被删除！");
+        } else {
+            //删除帖子下的所有回复
+            replyDAO.delListByTopicId(id);
+            //更新主题帖子数
+            Integer nodeId = topic.getNodeId();
+            Node node = nodeDAO.findNodeById(nodeId);
+            node.setTopicNum(node.getTopicNum()-1);
+            nodeDAO.update(node);
+            //删除贴子
+            topicDAO.delById(id);
+        }
+
+    }
+
+    public Page<TopicReplyCount> getTopicAndReplyNumByDayList(Integer pageNum) {
+        int count = topicDAO.countTopicByDay();
+        Page<TopicReplyCount> page = new Page<>(count,pageNum);
+
+        List<TopicReplyCount> countLits =  topicDAO.getTopicAndReplyNumList(page.getStart(),page.getPageSize());
+        page.setPageList(countLits);
+        return page;
+    }
+
+    public void updateNode(Integer nodeId, Integer id) throws ServiceException {
+        Topic topic = topicDAO.findById(id);
+        if(topic != null) {
+            if(nodeId != null) {
+                topic.setNodeId(nodeId);
+                topicDAO.updateTopic(topic);
+            } else {
+                throw new ServiceException("该节点不存在或已被删除！");
+            }
+        } else {
+            throw new ServiceException("该帖不存在或已被删除！");
+        }
+    }
 }
